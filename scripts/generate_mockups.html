@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bag Shop Inventory - UI Mockups</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --midnight: #1E3A5F;
+      --midnight-deep: #0F2540;
+      --midnight-light: #2E4A6F;
+      --gold: #D4AF37;
+      --gold-light: #E9C767;
+      --amber: #F5A623;
+      --surface: #FAFAFC;
+      --card: #FFFFFF;
+      --border: #E8ECF2;
+      --text: #1A1D21;
+      --text-secondary: #5A6370;
+      --text-muted: #8A929E;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --info: #3B82F6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0f2f5 0%, #e8ecf2 100%);
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding: 40px;
+      background: linear-gradient(135deg, var(--midnight), var(--midnight-light));
+      border-radius: 24px;
+      color: white;
+      box-shadow: 0 20px 60px rgba(30, 58, 95, 0.3);
+    }
+
+    .page-header h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+
+    .page-header p {
+      font-size: 18px;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    .page-header .badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 16px;
+      background: var(--gold);
+      color: var(--midnight-deep);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: -24px auto 40px;
+      max-width: 600px;
+    }
+
+    .toolbar button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-download-all {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--midnight-deep);
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
+    }
+
+    .btn-download-all:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-zip {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border) !important;
+    }
+
+    .btn-zip:hover {
+      background: var(--border);
+    }
+
+    .mockup-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 48px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .mockup-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mockup-item .dl-btn {
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mockup-item .dl-btn:hover {
+      background: var(--midnight);
+      color: white;
+      border-color: var(--midnight);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(30, 58, 95, 0.2);
+    }
+
+    .mockup-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      text-align: center;
+    }
+
+    .mockup-label span {
+      display: block;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .phone-frame {
+      width: 390px;
+      height: 844px;
+      background: var(--surface);
+      border-radius: 48px;
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.08),
+        0 32px 64px -12px rgba(0, 0, 0, 0.25),
+        0 0 0 8px #1a1a1a,
+        0 0 0 10px #333;
+    }
+
+    /* --- STATUS BAR --- */
+    .status-bar {
+      height: 48px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .status-bar .time {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .status-bar .icons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .status-bar .icons svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--text);
+    }
+
+    /* --- APP BAR --- */
+    .app-bar {
+      height: 56px;
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .app-bar .title {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .app-bar .actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .app-bar .actions .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      cursor: default;
+    }
+
+    /* --- CONTENT --- */
+    .content {
+      padding: 16px;
+      height: calc(100% - 152px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .scrollable {
+      overflow-y: auto;
+      padding-right: 2px;
+      flex: 1;
+    }
+
+    .scrollable::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .scrollable::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
+    }
+
+    /* --- CARD --- */
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+
+    /* --- BUTTONS --- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      border: none;
+      cursor: default;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--midnight), var(--midnight-light));
+      color: white;
+      box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--midnight-deep);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    }
+
+    .btn-outline {
+      background: var(--card);
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    /* --- INPUT --- */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .input-field {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: none;
+      background: #F1F5F9;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      outline: none;
+    }
+
+    .input-field::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* --- GRADIENT HEADER --- */
+    .gradient-header {
+      padding: 24px 22px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--midnight), var(--midnight-light));
+      color: white;
+      box-shadow: 0 16px 30px rgba(30, 58, 95, 0.15);
+    }
+
+    .gradient-header h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.4px;
+    }
+
+    .gradient-header p {
+      font-size: 14px;
+      opacity: 0.86;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .gradient-header .company-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* --- STATS GRID --- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-card .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .stat-card .stat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .stat-card .stat-value {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -0.6px;
+      line-height: 1.1;
+    }
+
+    .stat-card .stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* --- QUICK ACTIONS --- */
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .action-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: default;
+      transition: all 0.2s;
+    }
+
+    .action-btn .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .action-btn .label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: -0.2px;
+    }
+
+    /* --- LIST ITEMS --- */
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+
+    .list-item .item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .list-item .item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .list-item .item-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .list-item .item-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .list-item .item-right {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .list-item .item-value {
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .list-item .item-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* --- SECTION TITLE --- */
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -0.3px;
+    }
+
+    .section-title a {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--info);
+      text-decoration: none;
+    }
+
+    /* --- CHART --- */
+    .chart-placeholder {
+      height: 100px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      padding-top: 12px;
+    }
+
+    .chart-bar {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      min-height: 8px;
+      background: linear-gradient(to top, var(--midnight), var(--midnight-light));
+      opacity: 0.7;
+    }
+
+    .chart-bar:nth-child(4) {
+      opacity: 1;
+    }
+
+    .chart-labels {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .chart-labels span {
+      flex: 1;
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* --- STATUS BADGES --- */
+    .status-badge {
+      display: inline-flex;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: -0.1px;
+    }
+
+    .status-paid {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .status-pending {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .status-open {
+      background: #DBEAFE;
+      color: #1E40AF;
+    }
+
+    .status-critical {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    /* --- BOTTOM NAV --- */
+    .bottom-nav {
+      height: 64px;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 4px 12px;
+      cursor: default;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .nav-item.active {
+      color: var(--midnight);
+    }
+
+    .nav-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    /* --- LOGIN --- */
+    .screen-login {
+      background: linear-gradient(135deg, var(--midnight), var(--midnight-light));
+    }
+
+    .screen-login .status-bar {
+      background: transparent;
+    }
+
+    .screen-login .status-bar .time,
+    .screen-login .status-bar .icons {
+      color: white;
+    }
+
+    .screen-login .status-bar .icons svg {
+      fill: white;
+    }
+
+    .login-content {
+      padding: 0 24px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      gap: 28px;
+    }
+
+    .login-logo {
+      width: 80px;
+      height: 80px;
+      background: var(--card);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-brand {
+      text-align: center;
+    }
+
+    .login-brand h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.6px;
+    }
+
+    .login-brand p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.85);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .login-card {
+      width: 100%;
+      background: var(--card);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    /* --- PRODUCT ITEM --- */
+    .product-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+
+    .product-item .qr-placeholder {
+      width: 44px;
+      height: 44px;
+      background: rgba(30, 58, 95, 0.08);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    /* --- POS --- */
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: var(--card);
+      cursor: default;
+    }
+
+    /* --- SCANNER --- */
+    .scanner-viewport {
+      background: #1c2024;
+      border-radius: 20px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scanner-frame {
+      width: 200px;
+      height: 140px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 16px;
+      position: relative;
+    }
+
+    .scanner-line {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: var(--info);
+      animation: scan 2s ease-in-out infinite;
+      border-radius: 2px;
+    }
+
+    @keyframes scan {
+
+      0%,
+      100% {
+        top: 30%
+      }
+
+      50% {
+        top: 60%
+      }
+    }
+
+    /* --- SPLIT PAYMENT --- */
+    .split-payment {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .split-input {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    /* --- ALERTS --- */
+    .alert-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.18);
+    }
+
+    .alert-item.warning {
+      background: rgba(245, 158, 11, 0.08);
+      border-color: rgba(245, 158, 11, 0.18);
+    }
+
+    /* --- BOTTOM SHEET --- */
+    .bottom-sheet {
+      background: var(--card);
+      border-radius: 20px 20px 0 0;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .bottom-sheet .handle {
+      width: 36px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      margin: 0 auto 16px;
+    }
+
+    /* --- MINI STATS --- */
+    .admin-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .mini-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .mini-stat .num {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .mini-stat .lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 48px;
+      padding: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer p {
+      margin-top: 4px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--midnight-deep);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 14px;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-header">
+    <h1>🎒 Bag Shop Inventory</h1>
+    <p>Complete UI Mockup Set — Figma-quality design previews</p>
+    <div class="badge">14 Screens • Mobile-first • Midnight & Gold theme</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn-download-all" onclick="downloadAllPNG()">📥 Download All as PNG</button>
+    <button class="btn-zip" onclick="window.print()">🖨️ Print / Save PDF</button>
+  </div>
+
+  <div class="mockup-grid" id="mockupGrid">
+
+    <!-- ============================================================ -->
+    <!-- 1. LOGIN -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">01 — Login<span>Authentication gateway</span></div>
+      <div class="phone-frame screen-login" id="mockup-01">
+        <div class="status-bar" style="background:transparent;color:white">
+          <span class="time" style="color:white">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24" fill="white">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24" fill="white">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="login-content">
+          <div>
+            <div class="login-logo">👜</div>
+          </div>
+          <div class="login-brand">
+            <h1>Bag Shop<br>Inventory</h1>
+            <p>Manage inventory, sales, and staff — fast and secure.</p>
+          </div>
+          <div class="login-card">
+            <div>
+              <h3>Welcome back</h3>
+              <p style="font-size:14px;color:var(--text-secondary);margin-top:2px">Sign in to continue</p>
+            </div>
+            <div class="input-group"><label>Email</label><input class="input-field" type="email"
+                placeholder="name@company.com" value="shop@example.com"></div>
+            <div class="input-group"><label>Password</label><input class="input-field" type="password"
+                placeholder="••••••••" value="password"></div>
+            <button class="btn btn-primary btn-block" style="padding:14px">Sign In</button>
+            <div style="text-align:center;font-size:13px;color:var(--text-secondary)">Don't have an account? <span
+                style="color:var(--info);font-weight:700;cursor:default">Sign Up</span></div>
+          </div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-01','01_login')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 2. DASHBOARD -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">02 — Dashboard<span>Overview with stats & chart</span></div>
+      <div class="phone-frame" id="mockup-02">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Dashboard</span>
+          <div class="actions">
+            <div class="icon-btn">🔔</div>
+            <div class="icon-btn">☁️</div>
+            <div class="icon-btn">⚙️</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div class="gradient-header">
+            <h2>Welcome back 👋</h2>
+            <p>Track stock, process sales, and keep your shop running smoothly.</p>
+            <div class="company-chip"><span>🏪</span><span>Premium Bag Store — Dhaka</span></div>
+          </div>
+          <div class="card">
+            <div class="section-title">
+              <h3>Weekly Sales Trend</h3>
+            </div>
+            <div class="chart-placeholder">
+              <div class="chart-bar" style="height:40%"></div>
+              <div class="chart-bar" style="height:65%"></div>
+              <div class="chart-bar" style="height:45%"></div>
+              <div class="chart-bar" style="height:85%"></div>
+              <div class="chart-bar" style="height:60%"></div>
+              <div class="chart-bar" style="height:72%"></div>
+              <div class="chart-bar" style="height:55%"></div>
+            </div>
+            <div class="chart-labels">
+              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>
+          </div>
+          <div class="section-title">
+            <h3>Quick Stats</h3>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-icon" style="background:rgba(16,185,129,0.12);color:var(--success)">📦</div><span
+                  style="font-size:11px;padding:4px 10px;border-radius:100px;background:rgba(16,185,129,0.10);color:var(--success);font-weight:700">Live</span>
+              </div>
+              <div class="stat-value">284</div>
+              <div class="stat-label">Total Products</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-icon" style="background:rgba(245,158,11,0.12);color:var(--warning)">⚠️</div><span
+                  style="font-size:11px;padding:4px 10px;border-radius:100px;background:rgba(245,158,11,0.10);color:var(--warning);font-weight:700">3
+                  items</span>
+              </div>
+              <div class="stat-value" style="color:var(--warning)">12</div>
+              <div class="stat-label">Low Stock</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-icon" style="background:rgba(59,130,246,0.12);color:var(--info)">🧾</div><span
+                  style="font-size:11px;padding:4px 10px;border-radius:100px;background:rgba(59,130,246,0.10);color:var(--info);font-weight:700">Today</span>
+              </div>
+              <div class="stat-value">৳38,500</div>
+              <div class="stat-label">Today Sales</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-icon" style="background:rgba(30,58,95,0.12);color:var(--midnight)">📊</div><span
+                  style="font-size:11px;padding:4px 10px;border-radius:100px;background:rgba(30,58,95,0.10);color:var(--midnight);font-weight:700">Month</span>
+              </div>
+              <div class="stat-value">৳285K</div>
+              <div class="stat-label">Monthly Revenue</div>
+            </div>
+          </div>
+          <div class="section-title">
+            <h3>Quick Actions</h3>
+          </div>
+          <div class="actions-grid">
+            <div class="action-btn">
+              <div class="icon" style="background:rgba(30,58,95,0.10);color:var(--midnight)">📷</div>
+              <div class="label">Scan</div>
+            </div>
+            <div class="action-btn">
+              <div class="icon" style="background:rgba(16,185,129,0.10);color:var(--success)">➕</div>
+              <div class="label">Add Product</div>
+            </div>
+            <div class="action-btn">
+              <div class="icon" style="background:rgba(212,175,55,0.15);color:var(--gold)">🛒</div>
+              <div class="label">POS</div>
+            </div>
+            <div class="action-btn">
+              <div class="icon" style="background:rgba(59,130,246,0.10);color:var(--info)">👥</div>
+              <div class="label">Customers</div>
+            </div>
+            <div class="action-btn">
+              <div class="icon" style="background:rgba(59,130,246,0.10);color:var(--info)">🧾</div>
+              <div class="label">Sales</div>
+            </div>
+            <div class="action-btn">
+              <div class="icon" style="background:rgba(245,158,11,0.10);color:var(--warning)">📦</div>
+              <div class="label">Purchase</div>
+            </div>
+            <div class="action-btn">
+              <div class="icon" style="background:rgba(239,68,68,0.10);color:var(--danger)">📈</div>
+              <div class="label">Reports</div>
+            </div>
+            <div class="action-btn">
+              <div class="icon" style="background:rgba(59,130,246,0.10);color:var(--info)">🔍</div>
+              <div class="label">Analytics</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="section-title">
+              <h3>Recent Sales</h3><a href="#">View All →</a>
+            </div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+              <div class="list-item">
+                <div class="item-icon" style="background:rgba(30,58,95,0.08);color:var(--midnight)">🧾</div>
+                <div class="item-content">
+                  <div class="item-title">INV-2026-0042</div>
+                  <div class="item-subtitle">Walk-in Customer</div>
+                </div>
+                <div class="item-right">
+                  <div class="item-value">৳12,400</div>
+                  <div class="item-meta">Today • PAID</div>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="item-icon" style="background:rgba(30,58,95,0.08);color:var(--midnight)">🧾</div>
+                <div class="item-content">
+                  <div class="item-title">INV-2026-0041</div>
+                  <div class="item-subtitle">Fatima Begum</div>
+                </div>
+                <div class="item-right">
+                  <div class="item-value">৳8,750</div>
+                  <div class="item-meta">Yesterday • PAID</div>
+                </div>
+              </div>
+              <div class="list-item">
+                <div class="item-icon" style="background:rgba(30,58,95,0.08);color:var(--midnight)">🧾</div>
+                <div class="item-content">
+                  <div class="item-title">INV-2026-0040</div>
+                  <div class="item-subtitle">Karim Importers</div>
+                </div>
+                <div class="item-right">
+                  <div class="item-value">৳24,300</div>
+                  <div class="item-meta">Yesterday • PENDING</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="section-title">
+              <h3>Low Stock Alerts</h3><span class="status-badge status-critical">3 items</span>
+            </div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+              <div class="alert-item"><span>⚠️</span>
+                <div style="flex:1"><strong>Leather Tote Bag</strong><br><span
+                    style="font-size:12px;color:var(--text-muted)">SKU: LTB-001</span></div>
+                <div style="text-align:right"><strong style="color:var(--danger)">2 left</strong><br><span
+                    style="font-size:11px;color:var(--text-muted)">Min: 10</span></div>
+              </div>
+              <div class="alert-item warning"><span>⚠️</span>
+                <div style="flex:1"><strong>Canvas Backpack</strong><br><span
+                    style="font-size:12px;color:var(--text-muted)">SKU: CBP-023</span></div>
+                <div style="text-align:right"><strong style="color:var(--warning)">5 left</strong><br><span
+                    style="font-size:11px;color:var(--text-muted)">Min: 15</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item active"><span class="nav-icon">🏠</span>Home</div>
+          <div class="nav-item"><span class="nav-icon">📦</span>Products</div>
+          <div class="nav-item"><span class="nav-icon">🛒</span>POS</div>
+          <div class="nav-item"><span class="nav-icon">🧾</span>Sales</div>
+          <div class="nav-item"><span class="nav-icon">👤</span>Profile</div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-02','02_dashboard')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 3. PRODUCT LIST -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">03 — Product List<span>Search & browse inventory</span></div>
+      <div class="phone-frame" id="mockup-03">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Products</span>
+          <div class="actions">
+            <div class="icon-btn">⋮</div>
+            <div class="icon-btn" style="background:rgba(30,58,95,0.08);color:var(--midnight)">+</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div class="search-bar"
+            style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:#F1F5F9;border-radius:12px;color:var(--text-muted);font-size:14px">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--text-muted);flex-shrink:0">
+              <path
+                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <span>Search by name / SKU / barcode</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="product-item">
+              <div class="qr-placeholder">📷</div>
+              <div class="item-content">
+                <div class="item-title">Leather Tote Bag</div>
+                <div class="item-subtitle">LTB-001 • Tote • Leather</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--midnight)">৳3,500</div>
+                <div class="item-meta">Cost: ৳2,100</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="product-item">
+              <div class="qr-placeholder">📷</div>
+              <div class="item-content">
+                <div class="item-title">Canvas Backpack Pro</div>
+                <div class="item-subtitle">CBP-023 • Backpack • Canvas</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--midnight)">৳2,800</div>
+                <div class="item-meta">Cost: ৳1,600</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="product-item">
+              <div class="qr-placeholder">📷</div>
+              <div class="item-content">
+                <div class="item-title">Shoulder Bag Mini</div>
+                <div class="item-subtitle">SBM-112 • Shoulder • Faux Leather</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--midnight)">৳1,200</div>
+                <div class="item-meta">Cost: ৳650</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="product-item">
+              <div class="qr-placeholder">📷</div>
+              <div class="item-content">
+                <div class="item-title">Premium Laptop Bag</div>
+                <div class="item-subtitle">PLB-008 • Laptop • Nylon</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--midnight)">৳4,200</div>
+                <div class="item-meta">Cost: ৳2,800</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="product-item">
+              <div class="qr-placeholder">📷</div>
+              <div class="item-content">
+                <div class="item-title">Travel Duffle XL</div>
+                <div class="item-subtitle">TDX-045 • Duffle • Polyester</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--midnight)">৳5,500</div>
+                <div class="item-meta">Cost: ৳3,200</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item"><span class="nav-icon">🏠</span>Home</div>
+          <div class="nav-item active"><span class="nav-icon">📦</span>Products</div>
+          <div class="nav-item"><span class="nav-icon">🛒</span>POS</div>
+          <div class="nav-item"><span class="nav-icon">🧾</span>Sales</div>
+          <div class="nav-item"><span class="nav-icon">👤</span>Profile</div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-03','03_product_list')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 4. PRODUCT DETAIL -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">04 — Product Detail<span>Full product info & stock status</span></div>
+      <div class="phone-frame" id="mockup-04">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title" style="font-size:15px">Leather Tote Bag</span>
+          <div class="actions">
+            <div class="icon-btn">✏️</div>
+            <div class="icon-btn">🗑️</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div
+            style="height:180px;background:linear-gradient(135deg,var(--midnight),var(--midnight-light));border-radius:20px;display:flex;align-items:center;justify-content:center;color:white;font-size:60px">
+            👜</div>
+          <div class="stats-grid">
+            <div class="stat-card" style="padding:12px">
+              <div class="stat-label">Selling Price</div>
+              <div class="stat-value" style="font-size:22px;color:var(--midnight)">৳3,500</div>
+            </div>
+            <div class="stat-card" style="padding:12px">
+              <div class="stat-label">Unit Cost</div>
+              <div class="stat-value" style="font-size:22px;color:var(--success)">৳2,100</div>
+            </div>
+          </div>
+          <div class="card">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
+              <div><span style="color:var(--text-muted)">SKU</span><br><strong>LTB-001</strong></div>
+              <div><span style="color:var(--text-muted)">Barcode</span><br><strong>8901234567890</strong></div>
+              <div><span style="color:var(--text-muted)">Bag Type</span><br><strong>Tote</strong></div>
+              <div><span style="color:var(--text-muted)">Material</span><br><strong>Genuine Leather</strong></div>
+              <div><span style="color:var(--text-muted)">Color</span><br><strong>Tan Brown</strong></div>
+              <div><span style="color:var(--text-muted)">Size</span><br><strong>Medium (35×30 cm)</strong></div>
+              <div><span style="color:var(--text-muted)">Category</span><br><strong>Tote Bags</strong></div>
+              <div><span style="color:var(--text-muted)">Brand</span><br><strong>PremiumLine</strong></div>
+            </div>
+          </div>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div><strong>Stock Status</strong></div><span class="status-badge status-critical">Low Stock</span>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:space-between;font-size:14px"><span>Current:
+                <strong style="color:var(--danger)">2</strong></span><span>Min: <strong>10</strong></span><span>Max:
+                <strong>50</strong></span></div>
+            <div style="margin-top:8px;height:8px;background:var(--border);border-radius:4px;overflow:hidden">
+              <div style="width:15%;height:100%;background:var(--danger);border-radius:4px"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-sm btn-primary"
+                style="padding:8px 12px;font-size:12px">📦 Receive Stock</button><button class="btn btn-sm btn-outline"
+                style="padding:8px 12px;font-size:12px">🔄 Transfer</button></div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item"><span class="nav-icon">🏠</span>Home</div>
+          <div class="nav-item active"><span class="nav-icon">📦</span>Products</div>
+          <div class="nav-item"><span class="nav-icon">🛒</span>POS</div>
+          <div class="nav-item"><span class="nav-icon">🧾</span>Sales</div>
+          <div class="nav-item"><span class="nav-icon">👤</span>Profile</div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-04','04_product_detail')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 5. POS -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">05 — Point of Sale<span>Cart & split payments</span></div>
+      <div class="phone-frame" id="mockup-05">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">POS</span>
+          <div class="actions">
+            <div class="icon-btn">📷</div>
+          </div>
+        </div>
+        <div class="content" style="padding-bottom:0">
+          <div class="search-bar"
+            style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:#F1F5F9;border-radius:12px;color:var(--text-muted);font-size:14px">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--text-muted);flex-shrink:0">
+              <path
+                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <span>Search / Scan product</span>
+          </div>
+          <div class="scrollable" style="flex:1">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div class="list-item" style="padding:10px 12px">
+                <div class="item-content">
+                  <div class="item-title">Leather Tote Bag</div>
+                  <div class="item-subtitle">LTB-001 • ৳3,500</div>
+                </div>
+                <div class="qty-controls">
+                  <div class="qty-btn">−</div><span style="font-weight:700;width:24px;text-align:center">2</span>
+                  <div class="qty-btn">+</div>
+                </div>
+              </div>
+              <div class="list-item" style="padding:10px 12px">
+                <div class="item-content">
+                  <div class="item-title">Canvas Backpack Pro</div>
+                  <div class="item-subtitle">CBP-023 • ৳2,800</div>
+                </div>
+                <div class="qty-controls">
+                  <div class="qty-btn">−</div><span style="font-weight:700;width:24px;text-align:center">1</span>
+                  <div class="qty-btn">+</div>
+                </div>
+              </div>
+              <div class="list-item" style="padding:10px 12px">
+                <div class="item-content">
+                  <div class="item-title">Shoulder Bag Mini</div>
+                  <div class="item-subtitle">SBM-112 • ৳1,200</div>
+                </div>
+                <div class="qty-controls">
+                  <div class="qty-btn">−</div><span style="font-weight:700;width:24px;text-align:center">3</span>
+                  <div class="qty-btn">+</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:4px;flex-shrink:0">
+            <div style="font-weight:700;font-size:14px;margin-bottom:8px">Payment Method</div>
+            <div style="display:flex;gap:6px;margin-bottom:10px">
+              <span class="status-badge" style="background:var(--midnight);color:white;cursor:default">💵 Cash</span>
+              <span class="status-badge" style="background:var(--border);color:var(--text);cursor:default">💳
+                Card</span>
+              <span class="status-badge" style="background:var(--border);color:var(--text);cursor:default">📱 UPI</span>
+              <span class="status-badge"
+                style="background:var(--gold-light);color:var(--midnight-deep);cursor:default;font-weight:700">Split</span>
+            </div>
+            <div class="split-payment">
+              <div><input class="split-input" value="₹5,000" placeholder="Cash"></div>
+              <div><input class="split-input" value="₹3,000" placeholder="Card"></div>
+              <div><input class="split-input" value="₹2,500" placeholder="UPI"></div>
+            </div>
+          </div>
+          <div
+            style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;flex-shrink:0;border-top:1px solid var(--border)">
+            <div>
+              <div style="font-size:13px;color:var(--text-muted)">Items: 6</div>
+              <div style="font-weight:900;font-size:18px;color:var(--text)">৳10,500</div>
+            </div>
+            <button class="btn btn-gold" style="padding:14px 32px">Checkout →</button>
+          </div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-05','05_pos')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 6. BARCODE SCANNER -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">06 — Barcode Scanner<span>Camera viewfinder</span></div>
+      <div class="phone-frame" id="mockup-06">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Scan Barcode</span>
+          <div class="actions">
+            <div class="icon-btn">💡</div>
+          </div>
+        </div>
+        <div style="flex:1;background:#1c2024;position:relative;display:flex;align-items:center;justify-content:center">
+          <div class="scanner-frame">
+            <div
+              style="position:absolute;top:0;left:0;width:20px;height:20px;border-top:3px solid var(--info);border-left:3px solid var(--info);border-radius:4px 0 0 0">
+            </div>
+            <div
+              style="position:absolute;top:0;right:0;width:20px;height:20px;border-top:3px solid var(--info);border-right:3px solid var(--info);border-radius:0 4px 0 0">
+            </div>
+            <div
+              style="position:absolute;bottom:0;left:0;width:20px;height:20px;border-bottom:3px solid var(--info);border-left:3px solid var(--info);border-radius:0 0 0 4px">
+            </div>
+            <div
+              style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:3px solid var(--info);border-right:3px solid var(--info);border-radius:0 0 4px 0">
+            </div>
+            <div class="scanner-line"></div>
+          </div>
+          <div
+            style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.6);font-size:13px;text-align:center">
+            Align barcode within the frame</div>
+        </div>
+        <div class="bottom-sheet">
+          <div class="handle"></div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:4px">Product Found</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-bottom:12px">Barcode: 8901234567890 — Leather
+            Tote Bag</div>
+          <div style="display:flex;gap:8px"><button class="btn btn-primary" style="flex:1;padding:12px">📂 Open
+              Product</button><button class="btn btn-outline" style="flex:1;padding:12px">✨ Add New</button></div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-06','06_barcode_scanner')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 7. INVENTORY LIST -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">07 — Inventory List<span>Warehouse stock levels</span></div>
+      <div class="phone-frame" id="mockup-07">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Inventory</span>
+          <div class="actions">
+            <div class="icon-btn">🔍</div>
+            <div class="icon-btn">📊</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div style="display:flex;gap:8px">
+            <div class="card" style="flex:1;padding:10px 14px;display:flex;align-items:center;gap:8px;cursor:default">
+              <span>🏭</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">Main Warehouse</div>
+                <div style="font-size:11px;color:var(--text-muted)">Dhaka</div>
+              </div><span style="margin-left:auto">▼</span>
+            </div>
+            <div class="card" style="padding:10px 14px;display:flex;align-items:center;gap:8px;cursor:default">
+              <span>🔽</span><span style="font-weight:600;font-size:13px">All</span></div>
+          </div>
+          <div class="search-bar"
+            style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:#F1F5F9;border-radius:12px;color:var(--text-muted);font-size:13px">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--text-muted);flex-shrink:0">
+              <path
+                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <span>Search inventory...</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success)">📦</div>
+              <div class="item-content">
+                <div class="item-title">Leather Tote Bag</div>
+                <div class="item-subtitle">LTB-001 • Main Warehouse</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--success)">24 in stock</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(245,158,11,0.10);color:var(--warning)">📦</div>
+              <div class="item-content">
+                <div class="item-title">Canvas Backpack Pro</div>
+                <div class="item-subtitle">CBP-023 • Main Warehouse</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--warning)">5 in stock</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(239,68,68,0.10);color:var(--danger)">📦</div>
+              <div class="item-content">
+                <div class="item-title">Shoulder Bag Mini</div>
+                <div class="item-subtitle">SBM-112 • Main Warehouse</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--danger)">2 in stock</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success)">📦</div>
+              <div class="item-content">
+                <div class="item-title">Premium Laptop Bag</div>
+                <div class="item-subtitle">PLB-008 • Main Warehouse</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--success)">18 in stock</div>
+              </div>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item active"><span class="nav-icon">🏠</span>Home</div>
+          <div class="nav-item"><span class="nav-icon">📦</span>Products</div>
+          <div class="nav-item"><span class="nav-icon">🛒</span>POS</div>
+          <div class="nav-item"><span class="nav-icon">🧾</span>Sales</div>
+          <div class="nav-item"><span class="nav-icon">👤</span>Profile</div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-07','07_inventory')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 8. PURCHASE ORDERS -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">08 — Purchase Orders<span>Order & receive from suppliers</span></div>
+      <div class="phone-frame" id="mockup-08">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Purchase Orders</span>
+          <div class="actions">
+            <div class="icon-btn" style="background:rgba(30,58,95,0.08);color:var(--midnight)">+</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div class="card"
+            style="border:2px dashed var(--border);background:transparent;display:flex;align-items:center;gap:12px;cursor:default">
+            <span style="font-size:24px">➕</span>
+            <div>
+              <div style="font-weight:700;font-size:14px">Create Purchase Order</div>
+              <div style="font-size:12px;color:var(--text-muted)">Order from your suppliers</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(59,130,246,0.10);color:var(--info)">📋</div>
+              <div class="item-content">
+                <div class="item-title">PO-2026-0045</div>
+                <div class="item-subtitle">LeatherCraft Ltd. • Expected: Mar 28</div>
+              </div>
+              <div class="item-right"><span class="status-badge status-open">Open</span>
+                <div class="item-meta" style="margin-top:4px">৳45,000</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success)">📋</div>
+              <div class="item-content">
+                <div class="item-title">PO-2026-0044</div>
+                <div class="item-subtitle">BagHouse Ltd. • Received: Mar 22</div>
+              </div>
+              <div class="item-right"><span class="status-badge status-paid">Received</span>
+                <div class="item-meta" style="margin-top:4px">৳28,000</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(245,158,11,0.10);color:var(--warning)">📋</div>
+              <div class="item-content">
+                <div class="item-title">PO-2026-0043</div>
+                <div class="item-subtitle">Dhaka Bag Supply • Expected: Apr 5</div>
+              </div>
+              <div class="item-right"><span class="status-badge status-open">Open</span>
+                <div class="item-meta" style="margin-top:4px">৳62,000</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success)">📋</div>
+              <div class="item-content">
+                <div class="item-title">PO-2026-0042</div>
+                <div class="item-subtitle">Impex Bags Intl. • Received: Mar 18</div>
+              </div>
+              <div class="item-right"><span class="status-badge status-paid">Received</span>
+                <div class="item-meta" style="margin-top:4px">৳33,500</div>
+              </div>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-08','08_purchase_orders')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 9. SALES LIST -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">09 — Sales List<span>Invoices & payment tracking</span></div>
+      <div class="phone-frame" id="mockup-09">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Sales</span>
+          <div class="actions">
+            <div class="icon-btn">🔍</div>
+            <div class="icon-btn">📊</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div style="display:flex;gap:8px">
+            <span class="status-badge" style="background:var(--midnight);color:white;cursor:default">All</span>
+            <span class="status-badge" style="background:var(--border);color:var(--text);cursor:default">PAID</span>
+            <span class="status-badge" style="background:var(--border);color:var(--text);cursor:default">PENDING</span>
+            <span class="status-badge" style="background:var(--border);color:var(--text);cursor:default">RETURN</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success);font-size:16px">🧾
+              </div>
+              <div class="item-content">
+                <div class="item-title">INV-2026-0042</div>
+                <div class="item-subtitle">Fatima Begum • Today 2:30 PM</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value">৳12,400</div>
+                <div class="item-meta"><span class="status-badge status-paid">Paid</span></div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(245,158,11,0.10);color:var(--warning);font-size:16px">🧾
+              </div>
+              <div class="item-content">
+                <div class="item-title">INV-2026-0041</div>
+                <div class="item-subtitle">Karim Importers • Yesterday</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value">৳24,300</div>
+                <div class="item-meta"><span class="status-badge status-pending">Pending</span></div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success);font-size:16px">🧾
+              </div>
+              <div class="item-content">
+                <div class="item-title">INV-2026-0040</div>
+                <div class="item-subtitle">Walk-in • 2 days ago</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value">৳8,750</div>
+                <div class="item-meta"><span class="status-badge status-paid">Paid</span></div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(239,68,68,0.10);color:var(--danger);font-size:16px">🧾</div>
+              <div class="item-content">
+                <div class="item-title">INV-2026-0039</div>
+                <div class="item-subtitle">Sultana Fashions • 3 days ago</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value">৳6,200</div>
+                <div class="item-meta"><span class="status-badge status-critical">Return</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-09','09_sales')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 10. STOCK MOVEMENTS -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">10 — Stock Movements<span>Audit & movement history</span></div>
+      <div class="phone-frame" id="mockup-10">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Stock Movements</span>
+          <div class="actions">
+            <div class="icon-btn">🔍</div>
+            <div class="icon-btn">📅</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div class="card" style="display:flex;align-items:center;gap:10px;padding:10px 14px"><span>🏭</span>
+            <div style="flex:1">
+              <div style="font-weight:600;font-size:13px">Main Warehouse</div>
+              <div style="font-size:11px;color:var(--text-muted)">Filter by warehouse</div>
+            </div><span>▼</span>
+          </div>
+          <div style="display:flex;gap:6px">
+            <span class="status-badge" style="background:var(--midnight);color:white;cursor:default">All</span>
+            <span class="status-badge"
+              style="background:rgba(16,185,129,0.10);color:var(--success);cursor:default">In</span>
+            <span class="status-badge"
+              style="background:rgba(239,68,68,0.10);color:var(--danger);cursor:default">Out</span>
+            <span class="status-badge"
+              style="background:rgba(245,158,11,0.10);color:var(--warning);cursor:default">Transfer</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success)">⬇️</div>
+              <div class="item-content">
+                <div class="item-title">Leather Tote Bag</div>
+                <div class="item-subtitle">+50 from PO-2026-0044 • Today 10:30 AM</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--success)">+50</div>
+                <div class="item-meta">Before: 24</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(59,130,246,0.10);color:var(--info)">🔄</div>
+              <div class="item-content">
+                <div class="item-title">Canvas Backpack Pro</div>
+                <div class="item-subtitle">Transfer to Chittagong • Yesterday</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--info)">-10</div>
+                <div class="item-meta">Before: 15</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(245,158,11,0.10);color:var(--warning)">📝</div>
+              <div class="item-content">
+                <div class="item-title">Premium Laptop Bag</div>
+                <div class="item-subtitle">Stock adjustment • 2 days ago</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--warning)">+2</div>
+                <div class="item-meta">Before: 16</div>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success)">⬇️</div>
+              <div class="item-content">
+                <div class="item-title">Travel Duffle XL</div>
+                <div class="item-subtitle">+20 from PO-2026-0042 • 3 days ago</div>
+              </div>
+              <div class="item-right">
+                <div class="item-value" style="color:var(--success)">+20</div>
+                <div class="item-meta">Before: 8</div>
+              </div>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-10','10_stock_movements')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 11. ADMIN PANEL -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">11 — Admin Panel<span>Staff & invite codes</span></div>
+      <div class="phone-frame" id="mockup-11">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Admin Panel</span>
+          <div class="actions">
+            <div class="icon-btn">🔒</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div class="admin-stats">
+            <div class="mini-stat">
+              <div class="num">8</div>
+              <div class="lbl">Staff</div>
+            </div>
+            <div class="mini-stat">
+              <div class="num">3</div>
+              <div class="lbl">Invite Codes</div>
+            </div>
+            <div class="mini-stat">
+              <div class="num">4</div>
+              <div class="lbl">Warehouses</div>
+            </div>
+            <div class="mini-stat">
+              <div class="num">৳1.2M</div>
+              <div class="lbl">Inventory Value</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="section-title">
+              <h3>Invite Codes</h3>
+            </div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+              <div
+                style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(30,58,95,0.04);border-radius:10px">
+                <div>
+                  <div style="font-weight:700;font-family:monospace;font-size:16px;letter-spacing:2px">BAG-INVITE-A7K2
+                  </div>
+                  <div style="font-size:12px;color:var(--text-muted)">Used: 3/5 • Expires: Apr 15</div>
+                </div><span class="status-badge status-open">Active</span>
+              </div>
+              <div
+                style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(30,58,95,0.04);border-radius:10px">
+                <div>
+                  <div style="font-weight:700;font-family:monospace;font-size:16px;letter-spacing:2px">BAG-INVITE-M9X1
+                  </div>
+                  <div style="font-size:12px;color:var(--text-muted)">Used: 1/5 • Expires: Apr 20</div>
+                </div><span class="status-badge status-open">Active</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-block" style="margin-top:12px;padding:10px">Generate New Code</button>
+          </div>
+          <div class="card">
+            <div class="section-title">
+              <h3>Staff List</h3><span style="font-size:13px;color:var(--text-muted)">8 members</span>
+            </div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+              <div class="list-item" style="padding:10px">
+                <div
+                  style="width:36px;height:36px;border-radius:10px;background:var(--midnight);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">
+                  SK</div>
+                <div class="item-content">
+                  <div class="item-title">Mobin Haque</div>
+                  <div class="item-subtitle">Owner</div>
+                </div><span class="status-badge"
+                  style="background:rgba(16,185,129,0.10);color:var(--success);font-size:10px">Active</span>
+              </div>
+              <div class="list-item" style="padding:10px">
+                <div
+                  style="width:36px;height:36px;border-radius:10px;background:var(--gold);color:var(--midnight-deep);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">
+                  MR</div>
+                <div class="item-content">
+                  <div class="item-title">Rahim Mia</div>
+                  <div class="item-subtitle">Manager</div>
+                </div><span class="status-badge"
+                  style="background:rgba(16,185,129,0.10);color:var(--success);font-size:10px">Active</span>
+              </div>
+              <div class="list-item" style="padding:10px">
+                <div
+                  style="width:36px;height:36px;border-radius:10px;background:var(--midnight-light);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">
+                  AR</div>
+                <div class="item-content">
+                  <div class="item-title">Ahsan Khan</div>
+                  <div class="item-subtitle">Manager</div>
+                </div><span class="status-badge"
+                  style="background:rgba(16,185,129,0.10);color:var(--success);font-size:10px">Active</span>
+              </div>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-11','11_admin_panel')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 12. REPORTS HUB -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">12 — Reports Hub<span>Analytics & insights</span></div>
+      <div class="phone-frame" id="mockup-12">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Reports</span>
+          <div class="actions">
+            <div class="icon-btn">📅</div>
+            <div class="icon-btn">📄</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div class="section-title">
+            <h3>Report Categories</h3>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success);font-size:20px">📊
+              </div>
+              <div class="item-content">
+                <div class="item-title">Sales Report</div>
+                <div class="item-subtitle">Revenue, invoices, and sales trends</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(30,58,95,0.10);color:var(--midnight);font-size:20px">📦
+              </div>
+              <div class="item-content">
+                <div class="item-title">Stock Report</div>
+                <div class="item-subtitle">Current inventory levels and movement</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(212,175,55,0.15);color:var(--gold);font-size:20px">💰</div>
+              <div class="item-content">
+                <div class="item-title">Profit Report</div>
+                <div class="item-subtitle">Margin analysis and cost breakdown</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="list-item">
+              <div class="item-icon" style="background:rgba(59,130,246,0.10);color:var(--info);font-size:20px">🏷️</div>
+              <div class="item-content">
+                <div class="item-title">Inventory Valuation</div>
+                <div class="item-subtitle">Total stock value by warehouse</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="section-title">
+              <h3>Monthly Summary</h3>
+            </div>
+            <div style="margin-top:12px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px"><span
+                  style="color:var(--text-muted)">Total Revenue</span><span
+                  style="font-weight:800;font-size:18px">৳285,000</span></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:10px"><span
+                  style="color:var(--text-muted)">Total Cost</span><span style="font-weight:600">৳172,000</span></div>
+              <div
+                style="display:flex;justify-content:space-between;margin-bottom:10px;padding-top:10px;border-top:1px solid var(--border)">
+                <span style="font-weight:700">Gross Profit</span><span
+                  style="font-weight:800;font-size:18px;color:var(--success)">৳113,000</span></div>
+              <div style="display:flex;justify-content:space-between"><span
+                  style="color:var(--text-muted)">Margin</span><span
+                  style="font-weight:700;color:var(--success)">39.6%</span></div>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-12','12_reports')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 13. CUSTOMERS -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">13 — Customers<span>Customer management</span></div>
+      <div class="phone-frame" id="mockup-13">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Customers</span>
+          <div class="actions">
+            <div class="icon-btn">🔍</div>
+            <div class="icon-btn" style="background:rgba(30,58,95,0.08);color:var(--midnight)">+</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div class="search-bar"
+            style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:#F1F5F9;border-radius:12px;color:var(--text-muted);font-size:13px">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--text-muted);flex-shrink:0">
+              <path
+                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg><span>Search customers...</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="list-item">
+              <div
+                style="width:40px;height:40px;border-radius:12px;background:rgba(30,58,95,0.10);color:var(--midnight);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">
+                FB</div>
+              <div class="item-content">
+                <div class="item-title">Fatima Begum</div>
+                <div class="item-subtitle">+880 1712-345678 • 12 purchases</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="list-item">
+              <div
+                style="width:40px;height:40px;border-radius:12px;background:rgba(212,175,55,0.15);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">
+                KI</div>
+              <div class="item-content">
+                <div class="item-title">Karim Importers</div>
+                <div class="item-subtitle">karim@import.com • 24 purchases</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="list-item">
+              <div
+                style="width:40px;height:40px;border-radius:12px;background:rgba(16,185,129,0.10);color:var(--success);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">
+                SF</div>
+              <div class="item-content">
+                <div class="item-title">Sultana Fashions</div>
+                <div class="item-subtitle">+880 1987-654321 • 8 purchases</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="list-item">
+              <div
+                style="width:40px;height:40px;border-radius:12px;background:rgba(59,130,246,0.10);color:var(--info);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">
+                HC</div>
+              <div class="item-content">
+                <div class="item-title">Hasan & Co.</div>
+                <div class="item-subtitle">hasan.co@example.com • 5 purchases</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-13','13_customers')">📥 Download PNG</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 14. LOW STOCK & SUPPLIERS -->
+    <!-- ============================================================ -->
+    <div class="mockup-item">
+      <div class="mockup-label">14 — Alerts & Suppliers<span>Stock warnings & suppliers</span></div>
+      <div class="phone-frame" id="mockup-14">
+        <div class="status-bar"><span class="time">9:41</span>
+          <div class="icons"><svg viewBox="0 0 24 24">
+              <path
+                d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+            </svg><svg viewBox="0 0 24 24">
+              <path
+                d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+            </svg></div>
+        </div>
+        <div class="app-bar"><span class="title">Low Stock Alerts</span>
+          <div class="actions">
+            <div class="icon-btn">📋</div>
+          </div>
+        </div>
+        <div class="content scrollable">
+          <div style="display:flex;gap:8px">
+            <div class="card"
+              style="flex:1;padding:14px;text-align:center;background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.2)">
+              <div style="font-size:28px;font-weight:900;color:var(--danger)">3</div>
+              <div style="font-size:12px;color:var(--danger);font-weight:600">Critical</div>
+            </div>
+            <div class="card"
+              style="flex:1;padding:14px;text-align:center;background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2)">
+              <div style="font-size:28px;font-weight:900;color:var(--warning)">9</div>
+              <div style="font-size:12px;color:var(--warning);font-weight:600">Warning</div>
+            </div>
+            <div class="card" style="flex:1;padding:14px;text-align:center">
+              <div style="font-size:28px;font-weight:900;color:var(--success)">272</div>
+              <div style="font-size:12px;color:var(--text-muted);font-weight:600">OK</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="alert-item"><span>🚨</span>
+              <div style="flex:1"><strong>Leather Tote Bag</strong><br><span
+                  style="font-size:12px;color:var(--text-muted)">LTB-001 • Main Warehouse</span></div>
+              <div style="text-align:right"><strong style="color:var(--danger);font-size:18px">2</strong><br><span
+                  style="font-size:11px;color:var(--text-muted)">Min: 10</span></div>
+            </div>
+            <div class="alert-item warning"><span>⚠️</span>
+              <div style="flex:1"><strong>Canvas Backpack Pro</strong><br><span
+                  style="font-size:12px;color:var(--text-muted)">CBP-023 • Main Warehouse</span></div>
+              <div style="text-align:right"><strong style="color:var(--warning);font-size:18px">5</strong><br><span
+                  style="font-size:11px;color:var(--text-muted)">Min: 15</span></div>
+            </div>
+          </div>
+          <div class="section-title" style="margin-top:8px">
+            <h3>Suppliers</h3><a href="#">View All →</a>
+          </div>
+          <div class="card" style="padding:0">
+            <div class="list-item" style="border:none;border-radius:0;border-bottom:1px solid var(--border)">
+              <div class="item-icon" style="background:rgba(30,58,95,0.08);color:var(--midnight);font-size:16px">🏭
+              </div>
+              <div class="item-content">
+                <div class="item-title">LeatherCraft Ltd.</div>
+                <div class="item-subtitle">Dhaka • 12 orders this month</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="list-item" style="border:none;border-radius:0;border-bottom:1px solid var(--border)">
+              <div class="item-icon" style="background:rgba(212,175,55,0.12);color:var(--gold);font-size:16px">🏭</div>
+              <div class="item-content">
+                <div class="item-title">BagHouse Ltd.</div>
+                <div class="item-subtitle">Chittagong • 8 orders this month</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+            <div class="list-item" style="border:none;border-radius:0">
+              <div class="item-icon" style="background:rgba(16,185,129,0.10);color:var(--success);font-size:16px">🏭
+              </div>
+              <div class="item-content">
+                <div class="item-title">Dhaka Bag Supply</div>
+                <div class="item-subtitle">Dhaka • 5 orders this month</div>
+              </div><span style="color:var(--text-muted)">›</span>
+            </div>
+          </div>
+          <div style="height:20px"></div>
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPNG('mockup-14','14_alerts_suppliers')">📥 Download PNG</button>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>Bag Shop Inventory — 14 Complete UI Mockups</p>
+    <p>📱 Open → Click "Download PNG" on any mockup → Save as image</p>
+    <p style="font-size:13px;margin-top:8px">Designed in Midnight Blue (#1E3A5F) & Gold (#D4AF37) • Mobile frame:
+      390×844 px</p>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    function downloadPNG(id, name) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      showToast('Generating PNG...');
+
+      html2canvas(el, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        width: el.offsetWidth,
+        height: el.offsetHeight,
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `${name}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast(`✅ Saved: ${name}.png`);
+      }).catch(err => {
+        showToast('❌ Error: ' + err.message);
+        console.error(err);
+      });
+    }
+
+    function downloadAllPNG() {
+      const ids = ['mockup-01', 'mockup-02', 'mockup-03', 'mockup-04', 'mockup-05', 'mockup-06', 'mockup-07', 'mockup-08', 'mockup-09', 'mockup-10', 'mockup-11', 'mockup-12', 'mockup-13', 'mockup-14'];
+      const names = ['01_login', '02_dashboard', '03_product_list', '04_product_detail', '05_pos', '06_barcode_scanner', '07_inventory', '08_purchase_orders', '09_sales', '10_stock_movements', '11_admin_panel', '12_reports', '13_customers', '14_alerts_suppliers'];
+
+      showToast(`Generating ${ids.length} PNGs...`);
+
+      let i = 0;
+      function next() {
+        if (i >= ids.length) {
+          showToast(`✅ All ${ids.length} PNGs downloaded!`);
+          return;
+        }
+        const el = document.getElementById(ids[i]);
+        if (!el) { i++; next(); return; }
+
+        showToast(`Generating: ${names[i]}.png (${i + 1}/${ids.length})`);
+
+        html2canvas(el, {
+          backgroundColor: null,
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          width: el.offsetWidth,
+          height: el.offsetHeight,
+        }).then(canvas => {
+          const link = document.createElement('a');
+          link.download = `${names[i]}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          i++;
+          setTimeout(next, 500);
+        }).catch(err => {
+          showToast(`❌ Error on ${names[i]}`);
+          i++;
+          setTimeout(next, 500);
+        });
+      }
+      next();
+    }
+  </script>
+
+</body>
+
+</html>

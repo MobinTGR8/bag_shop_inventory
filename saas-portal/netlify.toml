@@ -1,0 +1,12 @@
+# Netlify deployment configuration for Bag Shop SaaS Portal (Next.js 14)
+[build]
+  # Build command runs from within saas-portal/ (base directory)
+  command = "npm run build"
+  # Netlify's Next.js runtime handles server-side rendering, API routes,
+  # middleware, and incremental static regeneration automatically.
+  # No publish directory needed — the runtime manages .next internally.
+
+# Environment variables needed (set in Netlify Dashboard → Environment variables):
+#   NEXT_PUBLIC_SUPABASE_URL
+#   NEXT_PUBLIC_SUPABASE_ANON_KEY
+#   SUPABASE_SERVICE_ROLE_KEY

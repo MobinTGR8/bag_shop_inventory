@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bag Shop Inventory - Project Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+  
+  :root {
+    --primary: #1E3A5F;
+    --primary-light: #2E5A8F;
+    --secondary: #D4AF37;
+    --secondary-light: #E9C767;
+    --bg: #FAFAFC;
+    --card: #FFFFFF;
+    --text: #1A1D21;
+    --text-secondary: #5A6370;
+    --border: #E8ECF2;
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --info: #3B82F6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* Cover Page */
+  .cover {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+    top: -200px;
+    right: -200px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+    bottom: -100px;
+    left: -100px;
+  }
+  .cover .content { position: relative; z-index: 1; max-width: 800px; }
+  .cover .university { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-bottom: 30px; }
+  .cover h1 { font-size: 52px; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.1; }
+  .cover .subtitle { font-size: 22px; opacity: 0.9; margin-bottom: 40px; font-weight: 300; }
+  .cover .meta { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+  .cover .meta-item { text-align: center; }
+  .cover .meta-item .label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; }
+  .cover .meta-item .value { font-size: 18px; font-weight: 600; margin-top: 4px; }
+  .cover .gold-line { width: 80px; height: 4px; background: var(--secondary); border-radius: 2px; margin: 20px auto; }
+
+  /* Main Content */
+  .container { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+
+  /* TOC */
+  .toc { margin-bottom: 60px; }
+  .toc h2 { font-size: 28px; font-weight: 700; margin-bottom: 24px; letter-spacing: -0.5px; }
+  .toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+  .toc-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--card); border-radius: 12px; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.2s; }
+  .toc-item:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(30,58,95,0.1); transform: translateY(-1px); }
+  .toc-item .num { width: 32px; height: 32px; background: var(--primary); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+
+  /* Sections */
+  .section { margin-bottom: 60px; }
+  .section h2 { 
+    font-size: 28px; font-weight: 700; 
+    margin-bottom: 8px; letter-spacing: -0.5px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--primary);
+    display: inline-block;
+  }
+  .section h3 { font-size: 20px; font-weight: 600; margin: 32px 0 16px; letter-spacing: -0.3px; }
+  .section h4 { font-size: 17px; font-weight: 600; margin: 24px 0 12px; }
+  .section p { margin-bottom: 16px; color: var(--text-secondary); }
+  .section ul, .section ol { margin: 12px 0 20px 24px; color: var(--text-secondary); }
+  .section li { margin-bottom: 8px; }
+
+  /* Cards */
+  .card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .card h3 { margin-top: 0; }
+  .card .icon { font-size: 32px; margin-bottom: 12px; }
+
+  /* Grids */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+  th { background: var(--primary); color: white; padding: 12px 16px; text-align: left; font-weight: 600; }
+  th:first-child { border-radius: 8px 0 0 0; }
+  th:last-child { border-radius: 0 8px 0 0; }
+  td { padding: 10px 16px; border-bottom: 1px solid var(--border); }
+  tr:nth-child(even) td { background: #F8FAFC; }
+  tr:hover td { background: #EEF2F8; }
+
+  /* Badges */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .badge-blue { background: #DBEAFE; color: #1D4ED8; }
+  .badge-green { background: #D1FAE5; color: #059669; }
+  .badge-yellow { background: #FEF3C7; color: #D97706; }
+  .badge-purple { background: #EDE9FE; color: #7C3AED; }
+  .badge-red { background: #FEE2E2; color: #DC2626; }
+  .badge-gray { background: #F3F4F6; color: #4B5563; }
+
+  /* Code */
+  pre { background: #1E293B; color: #E2E8F0; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; margin: 16px 0 24px; }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: #F1F5F9; padding: 2px 6px; border-radius: 4px; }
+  pre code { background: none; padding: 0; }
+
+  /* Diagrams */
+  .diagram-container { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 32px; margin: 24px 0; overflow-x: auto; }
+  .diagram-container svg { max-width: 100%; height: auto; }
+
+  /* Flow Boxes */
+  .flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+  .flow-box { padding: 14px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; text-align: center; min-width: 120px; }
+  .flow-arrow { font-size: 24px; color: var(--primary); font-weight: 300; }
+  .flow-start { background: #DBEAFE; color: #1D4ED8; }
+  .flow-process { background: #D1FAE5; color: #059669; }
+  .flow-decision { background: #FEF3C7; color: #D97706; }
+  .flow-end { background: #FEE2E2; color: #DC2626; }
+  .flow-db { background: #EDE9FE; color: #7C3AED; }
+
+  /* Tech Stack */
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 24px; }
+  .tech-item { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--card); }
+
+  /* Highlights */
+  .highlight-box { padding: 20px 24px; border-radius: 12px; margin: 20px 0; border-left: 4px solid; }
+  .highlight-info { background: #EFF6FF; border-color: var(--info); }
+  .highlight-success { background: #F0FDF4; border-color: var(--success); }
+  .highlight-warning { background: #FFFBEB; border-color: var(--warning); }
+  .highlight-danger { background: #FEF2F2; border-color: var(--danger); }
+
+  /* Page break */
+  .page-break { page-break-before: always; }
+
+  /* Mermaid */
+  .mermaid-wrapper { text-align: center; margin: 24px 0; }
+
+  /* Footer */
+  footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 13px; }
+  footer strong { color: var(--text); }
+
+  .section-number { display: inline-flex; align-items: center; gap: 8px; }
+  .section-number .num { 
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; background: var(--primary); color: white; 
+    border-radius: 10px; font-size: 16px; font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER PAGE ==================== -->
+<div class="cover">
+  <div class="content">
+    <div class="university">Patuakhali Science and Technology University</div>
+    <div class="gold-line"></div>
+    <h1>Bag Shop Inventory<br>Management System</h1>
+    <p class="subtitle">A comprehensive Flutter + Supabase inventory management solution for bag retail businesses</p>
+    <div class="meta">
+      <div class="meta-item">
+        <div class="label">Course</div>
+        <div class="value">CIT 320 :: SD Project-II</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Year</div>
+        <div class="value">2026</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Supervisor</div>
+        <div class="value">Md Mahbubur Rahman</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TABLE OF CONTENTS ==================== -->
+<div class="container">
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-grid">
+    <a class="toc-item" href="#sec1"><span class="num">1</span> Abstract</a>
+    <a class="toc-item" href="#sec2"><span class="num">2</span> Introduction</a>
+    <a class="toc-item" href="#sec3"><span class="num">3</span> Objectives</a>
+    <a class="toc-item" href="#sec4"><span class="num">4</span> Technology Stack</a>
+    <a class="toc-item" href="#sec5"><span class="num">5</span> System Architecture</a>
+    <a class="toc-item" href="#sec6"><span class="num">6</span> Database Schema &amp; ER Diagram</a>
+    <a class="toc-item" href="#sec7"><span class="num">7</span> Flow Charts</a>
+    <a class="toc-item" href="#sec8"><span class="num">8</span> UI/UX Design &amp; Figma Mockups</a>
+    <a class="toc-item" href="#sec9"><span class="num">9</span> Application Features</a>
+    <a class="toc-item" href="#sec10"><span class="num">10</span> Feasibility Analysis</a>
+    <a class="toc-item" href="#sec11"><span class="num">11</span> Route Map &amp; Screens</a>
+    <a class="toc-item" href="#sec12"><span class="num">12</span> Conclusion &amp; Future Work</a>
+  </div>
+</div>
+
+<!-- ==================== SECTION 1: ABSTRACT ==================== -->
+<div id="sec1" class="section">
+  <h2><span class="section-number"><span class="num">1</span> Abstract</span></h2>
+  <div class="card">
+    <p>The <strong>Bag Shop Inventory Management System</strong> is a cross-platform application built with <strong>Flutter</strong> and <strong>Supabase</strong>, designed specifically for bag retail businesses in Bangladesh. It provides a comprehensive solution for managing products (bags with type-specific attributes), inventory across multiple warehouses, sales orders with split payment support, purchase orders with receiving workflows, customer and supplier management, and detailed reporting (sales, profit, stock valuation, supplier performance).</p>
+    <p>The system implements a <strong>multi-tenant architecture</strong> where each company (shop owner) has isolated data, with role-based access control supporting Owner, Manager, Staff, and Accountant roles. An offline-first sync service with an outbox pattern ensures resilience in areas with unreliable internet connectivity. The application generates professional PDF invoices and reports, supports barcode/QR scanning for rapid product lookup, and includes CSV bulk import/export for data migration scenarios.</p>
+    <p>This project fulfills the requirements of <strong>CIT 320: Software Development Project-II</strong> at Patuakhali Science and Technology University, demonstrating mastery of modern full-stack mobile development, database design, state management, and enterprise application architecture.</p>
+  </div>
+</div>
+
+<!-- ==================== SECTION 2: INTRODUCTION ==================== -->
+<div id="sec2" class="section">
+  <h2><span class="section-number"><span class="num">2</span> Introduction</span></h2>
+  
+  <h3>2.1 Project Background</h3>
+  <p>Bag retail shops in Bangladesh face significant operational challenges in inventory management. Many shops still use paper-based systems or basic spreadsheets, leading to stock discrepancies, over-ordering, lost sales due to stockouts, and difficulty tracking business performance. Existing commercial inventory solutions are either too expensive for small-to-medium bag retailers or not tailored to the specific needs of a bag shop (e.g., tracking bag types, materials, sizes, and barcodes).</p>
+  
+  <h3>2.2 Problem Statement</h3>
+  <p>Bag shop owners need an affordable, easy-to-use system that can:</p>
+  <ul>
+    <li>Track inventory across multiple warehouses/showrooms</li>
+    <li>Process sales quickly at the point of sale (POS)</li>
+    <li>Manage purchase orders from suppliers</li>
+    <li>Support split payments (cash, card, mobile banking)</li>
+    <li>Generate insights through reports (profit, stock levels, supplier performance)</li>
+    <li>Work offline and sync when connectivity is restored</li>
+    <li>Support multiple staff members with role-based permissions</li>
+  </ul>
+  
+  <h3>2.3 Solution Overview</h3>
+  <p>The Bag Shop Inventory Management System addresses these needs with a modern, cross-platform mobile application. Built with Flutter for the frontend and Supabase (PostgreSQL) for the backend, it provides a responsive, premium UI with real-time data synchronization, comprehensive inventory tracking, a full POS workflow, and extensive reporting capabilities.</p>
+</div>
+
+<!-- ==================== SECTION 3: OBJECTIVES ==================== -->
+<div id="sec3" class="section">
+  <h2><span class="section-number"><span class="num">3</span> Project Objectives</span></h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="icon">🎯</div>
+      <h3>Primary Objectives</h3>
+      <ul>
+        <li>Develop a cross-platform inventory management app for Android, iOS, Web, and Desktop</li>
+        <li>Implement real-time data sync using Supabase PostgreSQL backend</li>
+        <li>Create a full Point-of-Sale (POS) system with split payment support</li>
+        <li>Design a role-based access control system for multi-staff environments</li>
+        <li>Build comprehensive reporting and analytics dashboards</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">💡</div>
+      <h3>Secondary Objectives</h3>
+      <ul>
+        <li>Implement offline-first architecture with outbox sync pattern</li>
+        <li>Provide barcode/QR scanning for rapid product lookup</li>
+        <li>Generate professional PDF invoices and reports</li>
+        <li>Support CSV bulk import/export for data migration</li>
+        <li>Provide backend health monitoring tools for administrators</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 4: TECHNOLOGY STACK ==================== -->
+<div id="sec4" class="section">
+  <h2><span class="section-number"><span class="num">4</span> Technology Stack</span></h2>
+  
+  <table>
+    <thead>
+      <tr><th>Layer</th><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="badge badge-blue">Frontend</span></td><td>Flutter</td><td>3.x</td><td>Cross-platform UI framework</td></tr>
+      <tr><td><span class="badge badge-blue">Language</span></td><td>Dart</td><td>3.0+</td><td>Primary programming language</td></tr>
+      <tr><td><span class="badge badge-purple">Backend</span></td><td>Supabase</td><td>-</td><td>Backend-as-a-Service (PostgreSQL + Auth + Storage + Realtime)</td></tr>
+      <tr><td><span class="badge badge-purple">Database</span></td><td>PostgreSQL</td><td>-</td><td>Relational database (via Supabase)</td></tr>
+      <tr><td><span class="badge badge-green">State Mgmt</span></td><td>Riverpod</td><td>2.4.9</td><td>State management and dependency injection</td></tr>
+      <tr><td><span class="badge badge-green">Navigation</span></td><td>Go Router</td><td>12.1.1</td><td>Declarative routing with auth guards</td></tr>
+      <tr><td><span class="badge badge-yellow">Charts</span></td><td>fl_chart</td><td>0.66</td><td>Line charts, bar charts for reports</td></tr>
+      <tr><td><span class="badge badge-yellow">PDF</span></td><td>pdf + printing</td><td>3.10 / 5.11</td><td>Invoice and report PDF generation</td></tr>
+      <tr><td><span class="badge badge-gray">Barcode</span></td><td>mobile_scanner</td><td>3.4.0</td><td>Camera-based barcode scanning</td></tr>
+      <tr><td><span class="badge badge-gray">Local Storage</span></td><td>SharedPreferences</td><td>2.2.2</td><td>Offline outbox queue persistence</td></tr>
+      <tr><td><span class="badge badge-red">Auth</span></td><td>Supabase Auth</td><td>-</td><td>Email/password authentication</td></tr>
+      <tr><td><span class="badge badge-red">Icons</span></td><td>Iconsax</td><td>0.0.8</td><td>Modern icon set</td></tr>
+      <tr><td><span class="badge badge-red">Fonts</span></td><td>Inter + Google Fonts</td><td>-</td><td>Professional typography</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box highlight-info">
+    <strong>Architecture Pattern:</strong> The application follows a <strong>Clean Architecture</strong>-inspired layered approach with distinct data, domain, and presentation layers, combined with the <strong>Repository pattern</strong> for data access abstraction.
+  </div>
+</div>
+
+<!-- ==================== SECTION 5: SYSTEM ARCHITECTURE ==================== -->
+<div id="sec5" class="section">
+  <h2><span class="section-number"><span class="num">5</span> System Architecture</span></h2>
+  
+  <h3>5.1 High-Level Architecture</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+graph TB
+    subgraph "Flutter Client Application"
+        UI["🎨 UI Layer<br/>Widgets &amp; Screens"]
+        State["📊 State Management<br/>Riverpod Providers"]
+        Repo["🗄️ Repository Layer<br/>Data Access"]
+        Sync["🔄 Sync Service<br/>Outbox Pattern"]
+        PDF["📄 PDF Services<br/>Invoice &amp; Reports"]
+    end
+
+    subgraph "Supabase Backend"
+        Auth["🔐 Supabase Auth<br/>Email/Password"]
+        DB[("🗃️ PostgreSQL Database<br/>Multi-tenant Schema")]
+        RT["⚡ Realtime<br/>Subscriptions"]
+        Storage["📁 Object Storage<br/>Product Images"]
+    end
+
+    UI --> State
+    State --> Repo
+    Repo -->|Online| DB
+    Repo -->|Offline Queued| Sync
+    Sync -->|Background Sync| DB
+    UI --> PDF
+    State --> Auth
+    Auth --> Auth
+    UI -->|Scan| Barcode["📷 Barcode Scanner"]
+  </pre>
+    </div>
+  </div>
+
+  <h3>5.2 Clean Architecture Layers</h3>
+  <div class="grid-3">
+    <div class="card">
+      <h4>🎨 Presentation Layer</h4>
+      <p><span class="badge badge-blue">Flutter Widgets</span></p>
+      <ul>
+        <li>Screens (40+ screens)</li>
+        <li>Widgets (reusable components)</li>
+        <li>Providers (Riverpod)</li>
+        <li>Router (GoRouter)</li>
+        <li>Theme (Material 3)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>📦 Data Layer</h4>
+      <p><span class="badge badge-green">Repositories</span></p>
+      <ul>
+        <li>14 Repository classes</li>
+        <li>SupabaseService wrapper</li>
+        <li>SyncService (offline queue)</li>
+        <li>Models (15+ data models)</li>
+        <li>LocalDatabase (SharedPrefs)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>🎯 Domain Layer</h4>
+      <p><span class="badge badge-yellow">Business Logic</span></p>
+      <ul>
+        <li>Domain entities</li>
+        <li>Repository interfaces</li>
+        <li>Business calculations</li>
+        <li>Validation rules</li>
+        <li>Core constants</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>5.3 Offline-First Sync Architecture</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+sequenceDiagram
+    participant App as Flutter App
+    participant Sync as SyncService
+    participant SP as SharedPrefs
+    participant SB as Supabase
+
+    App->>Sync: enqueueInsert(table, rows)
+    Sync->>SP: save OutboxAction to JSON
+    SP-->>Sync: OK
+
+    Note over App: Network becomes available
+
+    App->>Sync: syncOutbox()
+    Sync->>SP: load pending actions
+    SP-->>Sync: [OutboxAction...]
+    
+    loop for each action
+        Sync->>SB: INSERT / UPDATE
+        alt success
+            Sync->>SP: remove action
+        else duplicate
+            Sync->>SP: skip & remove
+        else error
+            Sync-->>App: return SyncResult with error
+        end
+    end
+    
+    Sync-->>App: SyncResult(processed, remaining)
+  </pre>
+    </div>
+  </div>
+
+  <h3>5.4 Authentication Flow</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+graph TD
+    Start(( )) -->|Open App| Login{Logged In?}
+    Login -->|No| LoginScreen[Login Screen]
+    Login -->|Yes| Dashboard[Dashboard]
+    
+    LoginScreen -->|Sign In| AuthCheck{Valid?}
+    AuthCheck -->|Yes| Resolve[Resolve Company &amp; Role]
+    AuthCheck -->|No| LoginScreen
+    
+    Resolve -->|Owner| OwnerDash[Owner Dashboard]
+    Resolve -->|Staff| StaffDash[Staff Dashboard]
+    
+    OwnerDash --> Admin[Admin Panel]
+    Admin --> StaffMgmt[Staff Management]
+    Admin --> BulkOps[Bulk Import/Export]
+    Admin --> Health[Backend Health]
+    Admin --> SyncQueue[Sync Queue]
+</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 6: DATABASE SCHEMA & ER DIAGRAM ==================== -->
+<div id="sec6" class="section">
+  <h2><span class="section-number"><span class="num">6</span> Database Schema &amp; ER Diagram</span></h2>
+
+  <h3>6.1 Entity Relationship Diagram</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+erDiagram
+    companies ||--o{ products : "has"
+    companies ||--o{ categories : "has"
+    companies ||--o{ brands : "has"
+    companies ||--o{ warehouses : "has"
+    companies ||--o{ customers : "has"
+    companies ||--o{ suppliers : "has"
+    companies ||--o{ sales_orders : "has"
+    companies ||--o{ purchase_orders : "has"
+    companies ||--o{ staff : "has"
+    companies ||--o{ stock_movements : "has"
+
+    products ||--o{ inventory : "stocks"
+    products ||--o{ sales_order_items : "sold in"
+    products ||--o{ purchase_order_items : "ordered in"
+    products ||--o{ stock_movements : "moved"
+    products }o--|| categories : "belongs to"
+    products }o--|| brands : "branded by"
+
+    warehouses ||--o{ inventory : "contains"
+    warehouses ||--o{ stock_movements : "originates from"
+    warehouses ||--o{ sales_order_items : "ships from"
+    warehouses ||--o{ purchase_order_items : "receives to"
+
+    sales_orders ||--o{ sales_order_items : "contains"
+    sales_orders }o--|| customers : "placed by"
+
+    purchase_orders ||--o{ purchase_order_items : "contains"
+    purchase_orders }o--|| suppliers : "from"
+
+    staff ||--o{ sales_orders : "created by"
+    staff ||--o{ purchase_orders : "created by"
+    staff ||--o{ stock_movements : "recorded by"
+
+    companies {
+        uuid id PK
+        varchar name
+        varchar shop_name
+        varchar phone
+        varchar email
+        uuid owner_id
+    }
+
+    products {
+        uuid id PK
+        uuid company_id FK
+        varchar sku UK
+        varchar name
+        text description
+        uuid category_id FK
+        uuid brand_id FK
+        varchar bag_type
+        varchar material
+        varchar color
+        varchar size
+        varchar dimensions
+        decimal weight_grams
+        varchar barcode UK
+        varchar qr_code
+        decimal unit_cost
+        decimal selling_price
+        decimal wholesale_price
+        int min_stock
+        int max_stock
+        int reorder_point
+        boolean is_active
+        boolean has_warranty
+        int warranty_months
+        jsonb image_urls
+        varchar video_url
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    categories {
+        uuid id PK
+        uuid company_id FK
+        varchar name
+        text description
+        varchar icon
+        varchar color
+    }
+
+    brands {
+        uuid id PK
+        uuid company_id FK
+        varchar name
+        varchar logo_url
+        varchar website
+    }
+
+    warehouses {
+        uuid id PK
+        uuid company_id FK
+        varchar name
+        varchar type
+        boolean is_default
+    }
+
+    inventory {
+        uuid id PK
+        uuid product_id FK
+        uuid warehouse_id FK
+        int quantity
+        int reserved_quantity
+        int available_quantity
+        varchar batch_number
+        date manufacturing_date
+        date expiry_date
+        varchar condition
+        text notes
+        timestamp last_counted
+    }
+
+    customers {
+        uuid id PK
+        uuid company_id FK
+        varchar name
+        varchar phone
+    }
+
+    suppliers {
+        uuid id PK
+        uuid company_id FK
+        varchar name
+    }
+
+    sales_orders {
+        uuid id PK
+        uuid company_id FK
+        uuid customer_id FK
+        varchar invoice_number UK
+        varchar status
+        date sale_date
+        date due_date
+        decimal subtotal
+        decimal tax_amount
+        decimal discount_amount
+        decimal shipping_charge
+        decimal total_amount
+        decimal amount_paid
+        decimal balance_due
+        varchar payment_method
+        varchar payment_status
+        jsonb payment_split
+        text shipping_address
+        varchar shipping_method
+        varchar tracking_number
+        text notes
+        uuid created_by
+    }
+
+    sales_order_items {
+        uuid id PK
+        uuid sales_order_id FK
+        uuid product_id FK
+        uuid warehouse_id FK
+        int quantity
+        decimal unit_price
+        decimal discount_percent
+        decimal line_total
+        text notes
+    }
+
+    purchase_orders {
+        uuid id PK
+        uuid company_id FK
+        uuid supplier_id FK
+        varchar po_number UK
+        varchar status
+        date order_date
+        date expected_delivery
+        date actual_delivery
+        decimal subtotal
+        decimal tax_amount
+        decimal shipping_cost
+        decimal discount_amount
+        decimal total_amount
+        text notes
+        uuid created_by
+    }
+
+    purchase_order_items {
+        uuid id PK
+        uuid purchase_order_id FK
+        uuid product_id FK
+        uuid warehouse_id FK
+        int quantity
+        decimal unit_cost
+        varchar batch_number
+        int received_quantity
+    }
+
+    stock_movements {
+        uuid id PK
+        uuid company_id FK
+        uuid product_id FK
+        uuid warehouse_id FK
+        varchar movement_type
+        int quantity_change
+        int quantity_before
+        varchar batch_number
+        varchar reference_type
+        uuid reference_id
+        text notes
+        uuid created_by
+        timestamp created_at
+    }
+
+    staff {
+        uuid id PK
+        uuid user_id FK
+        uuid company_id FK
+        varchar name
+        varchar email
+        varchar phone
+        varchar role
+        jsonb permissions
+        boolean is_active
+        timestamp joined_date
+        timestamp created_at
+    }
+  </pre>
+    </div>
+  </div>
+
+  <h3>6.2 Database Schema Details</h3>
+  
+  <h4>6.2.1 Companies (Multi-tenant Root)</h4>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>id</td><td>UUID</td><td>PK</td><td>Primary identifier</td></tr>
+      <tr><td>name</td><td>VARCHAR</td><td>NOT NULL</td><td>Owner/company name</td></tr>
+      <tr><td>shop_name</td><td>VARCHAR</td><td>NOT NULL</td><td>Display shop name</td></tr>
+      <tr><td>phone</td><td>VARCHAR</td><td></td><td>Contact phone</td></tr>
+      <tr><td>email</td><td>VARCHAR</td><td></td><td>Contact email</td></tr>
+      <tr><td>owner_id</td><td>UUID</td><td>FK → auth.users</td><td>Company owner</td></tr>
+    </tbody>
+  </table>
+
+  <h4>6.2.2 Products</h4>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>id</td><td>UUID</td><td>PK, DEFAULT gen_random_uuid()</td><td></td></tr>
+      <tr><td>company_id</td><td>UUID</td><td>FK → companies, NOT NULL</td><td>Tenant isolation</td></tr>
+      <tr><td>sku</td><td>VARCHAR</td><td>UNIQUE, NOT NULL</td><td>Stock Keeping Unit</td></tr>
+      <tr><td>name</td><td>VARCHAR</td><td>NOT NULL</td><td>Product display name</td></tr>
+      <tr><td>description</td><td>TEXT</td><td></td><td>Product description</td></tr>
+      <tr><td>category_id</td><td>UUID</td><td>FK → categories</td><td>Product category</td></tr>
+      <tr><td>brand_id</td><td>UUID</td><td>FK → brands</td><td>Product brand</td></tr>
+      <tr><td>bag_type</td><td>VARCHAR</td><td></td><td>Backpack, Handbag, etc.</td></tr>
+      <tr><td>material</td><td>VARCHAR</td><td></td><td>Leather, Canvas, etc.</td></tr>
+      <tr><td>color</td><td>VARCHAR</td><td></td><td>Primary color</td></tr>
+      <tr><td>size</td><td>VARCHAR</td><td></td><td>Small/Medium/Large</td></tr>
+      <tr><td>dimensions</td><td>VARCHAR</td><td></td><td>Physical dimensions</td></tr>
+      <tr><td>weight_grams</td><td>DECIMAL</td><td></td><td>Weight in grams</td></tr>
+      <tr><td>barcode</td><td>VARCHAR</td><td>UNIQUE</td><td>Barcode identifier</td></tr>
+      <tr><td>unit_cost</td><td>DECIMAL(12,2)</td><td>NOT NULL</td><td>Cost price</td></tr>
+      <tr><td>selling_price</td><td>DECIMAL(12,2)</td><td>NOT NULL</td><td>Retail price</td></tr>
+      <tr><td>wholesale_price</td><td>DECIMAL(12,2)</td><td></td><td>Bulk price</td></tr>
+      <tr><td>min_stock</td><td>INTEGER</td><td>DEFAULT 5</td><td>Minimum stock threshold</td></tr>
+      <tr><td>max_stock</td><td>INTEGER</td><td></td><td>Maximum stock cap</td></tr>
+      <tr><td>reorder_point</td><td>INTEGER</td><td></td><td>Reorder trigger level</td></tr>
+      <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT true</td><td>Product active status</td></tr>
+      <tr><td>image_urls</td><td>JSONB</td><td></td><td>Array of image URLs</td></tr>
+    </tbody>
+  </table>
+
+  <h4>6.2.3 Inventory (Stock Tracking)</h4>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>id</td><td>UUID</td><td>PK</td><td></td></tr>
+      <tr><td>product_id</td><td>UUID</td><td>FK → products</td><td>Stocked product</td></tr>
+      <tr><td>warehouse_id</td><td>UUID</td><td>FK → warehouses</td><td>Warehouse location</td></tr>
+      <tr><td>quantity</td><td>INTEGER</td><td>DEFAULT 0</td><td>Current stock quantity</td></tr>
+      <tr><td>reserved_quantity</td><td>INTEGER</td><td>DEFAULT 0</td><td>Reserved for orders</td></tr>
+      <tr><td>available_quantity</td><td>INTEGER</td><td></td><td>Available (quantity - reserved)</td></tr>
+      <tr><td>batch_number</td><td>VARCHAR</td><td></td><td>Batch/lot identifier</td></tr>
+      <tr><td>condition</td><td>VARCHAR</td><td>DEFAULT 'NEW'</td><td>NEW, DAMAGED, etc.</td></tr>
+    </tbody>
+  </table>
+
+  <h4>6.2.4 Stock Movements (Audit Trail)</h4>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>id</td><td>UUID</td><td>PK</td><td></td></tr>
+      <tr><td>company_id</td><td>UUID</td><td>FK → companies</td><td>Tenant</td></tr>
+      <tr><td>product_id</td><td>UUID</td><td>FK → products</td><td>Product moved</td></tr>
+      <tr><td>warehouse_id</td><td>UUID</td><td>FK → warehouses</td><td>Warehouse location</td></tr>
+      <tr><td>movement_type</td><td>VARCHAR</td><td>NOT NULL</td><td>SALE, PURCHASE, ADJUSTMENT,<br>TRANSFER, RETURN</td></tr>
+      <tr><td>quantity_change</td><td>INTEGER</td><td>NOT NULL</td><td>+/- quantity change</td></tr>
+      <tr><td>quantity_before</td><td>INTEGER</td><td></td><td>Snapshot before change</td></tr>
+      <tr><td>reference_type</td><td>VARCHAR</td><td></td><td>SALES_ORDER, PURCHASE_ORDER,<br>MANUAL_ADJUSTMENT, STOCK_TAKE</td></tr>
+      <tr><td>reference_id</td><td>UUID</td><td></td><td>Link to source document</td></tr>
+      <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT now()</td><td>When movement occurred</td></tr>
+    </tbody>
+  </table>
+
+  <h4>6.2.5 Sales Orders</h4>
+  <table>
+    <thead><tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>id</td><td>UUID</td><td>PK</td><td></td></tr>
+      <tr><td>company_id</td><td>UUID</td><td>FK → companies</td><td></td></tr>
+      <tr><td>invoice_number</td><td>VARCHAR</td><td>UNIQUE, GENERATED</td><td>Auto-generated invoice</td></tr>
+      <tr><td>status</td><td>VARCHAR</td><td>DEFAULT 'PENDING'</td><td>PENDING, CONFIRMED, CANCELLED</td></tr>
+      <tr><td>total_amount</td><td>DECIMAL(12,2)</td><td></td><td>Order total</td></tr>
+      <tr><td>payment_status</td><td>VARCHAR</td><td>DEFAULT 'PENDING'</td><td>PENDING, PAID, PARTIAL</td></tr>
+      <tr><td>payment_method</td><td>VARCHAR</td><td></td><td>CASH, CARD, UPI, SPLIT</td></tr>
+      <tr><td>payment_split</td><td>JSONB</td><td></td><td>Split payment breakdown</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== SECTION 7: FLOW CHARTS ==================== -->
+<div id="sec7" class="section">
+  <h2><span class="section-number"><span class="num">7</span> Flow Charts</span></h2>
+
+  <h3>7.1 Point of Sale (POS) Flow</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+graph TD
+    A[Open POS Screen] --> B[Search/Search Product]
+    B --> C{Found?}
+    C -->|Yes| D[Add to Cart]
+    C -->|No| E[Try Barcode Scan]
+    E --> C
+    
+    D --> F{More Items?}
+    F -->|Yes| B
+    F -->|No| G[Review Cart]
+    
+    G --> H[Select Payment Method]
+    H --> I{CASH?}
+    H --> J{CARD?}
+    H --> K{UPI?}
+    H --> L{SPLIT?}
+    
+    I --> M[Enter Cash Amount]
+    J --> N[Enter Card Amount]
+    K --> O[Enter UPI Amount]
+    L --> P[Enter Split Amounts]
+    
+    M & N & O & P --> Q[Show Payment Simulation]
+    Q --> R{Simulation OK?}
+    R -->|Yes| S[Create Sale Order]
+    R -->|No, Retry| H
+    
+    S --> T[Insert Stock Movements -SALE]
+    T --> U[Generate Invoice]
+    U --> V[Receipt Printed]
+    V --> W[Clear Cart]
+    W --> X[Return to POS]
+  </pre>
+    </div>
+  </div>
+
+  <h3>7.2 Purchase Order & Receive Flow</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+graph TD
+    PO[Create Purchase Order] --> POItems[Add Items &amp; Quantities]
+    POItems --> POSubmit[Submit PO]
+    POSubmit --> POStatus{PENDING}
+    
+    POStatus --> |Supplier Delivers| Receive[Open Receive Screen]
+    Receive --> LoadItems[Load PO Items]
+    LoadItems --> CheckQty[Enter Received Quantities]
+    CheckQty --> Validate{Valid?}
+    Validate -->|Qty ≤ Remaining| Mvmt["Insert Stock Movements +PURCHASE"]
+    Validate -->|Qty > Remaining| Error[Show Error]
+    Error --> CheckQty
+    
+    Mvmt --> UpdateItems[Update received_quantity]
+    UpdateItems --> CheckFull{All Received?}
+    CheckFull -->|Yes| UpdateStatus[Update PO Status → RECEIVED]
+    CheckFull -->|No| KeepStatus[Keep PO Status → PENDING]
+    UpdateStatus --> Done[Receive Complete]
+    KeepStatus --> Done
+</pre>
+    </div>
+  </div>
+
+  <h3>7.3 Inventory Adjustment Flow</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+graph TD
+    Adj[Open Stock Adjustment] --> SelProd[Select Product]
+    SelProd --> SelWh[Select Warehouse]
+    SelWh --> GetCurr[Load Current Quantity]
+    GetCurr --> EnterDelta[Enter Quantity Change]
+    EnterDelta --> Reason[Enter Reason]
+    
+    Reason --> Confirm{Confirm?}
+    Confirm -->|Yes| Mvmt["Create Stock Movement ADJUSTMENT"]
+    Confirm -->|No| Cancel[Cancel]
+    
+    Mvmt --> Success["✅ Stock Updated"]
+    Mvmt -.->|Offline| Queue["⏳ Queued for Sync"]
+</pre>
+    </div>
+  </div>
+
+  <h3>7.4 Stock Transfer Flow</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+graph TD
+    Xfer[Open Stock Transfer] --> Prod[Select Product]
+    Prod --> From[Select Source Warehouse]
+    From --> To[Select Destination Warehouse]
+    To --> Qty[Enter Transfer Quantity]
+    Qty --> Check{From has enough?}
+    Check -->|Yes| Batch[Optional Batch Number]
+    Check -->|No| Error["❌ Insufficient Stock"]
+    Error --> Qty
+    
+    Batch --> Confirm2{Confirm Transfer?}
+    Confirm2 -->|Yes| Mvmt1["Movement 1: Source -Qty"]
+    Confirm2 -->|Yes| Mvmt2["Movement 2: Destination +Qty"]
+    Mvmt1 & Mvmt2 --> Success2["✅ Transfer Complete"]
+</pre>
+    </div>
+  </div>
+
+  <h3>7.5 Sales Return Flow</h3>
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+graph TD
+    Open[Open Sale Detail] --> Return[Click Return Items]
+    Return --> LoadItems[Load Sale Items]
+    LoadItems --> SelItems[Select Items &amp; Quantities to Return]
+    SelItems --> Validate{Valid Returns?}
+    Validate -->|Qty ≤ Original| Mvmt["Create Stock Movements +RETURN"]
+    Validate -->|Invalid| Error["Show Error"]
+    Error --> SelItems
+    
+    Mvmt --> Success["✅ Return Complete, Stock Restored"]
+</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 8: UI/UX DESIGN & FIGMA MOCKUPS ==================== -->
+<div id="sec8" class="section">
+  <h2><span class="section-number"><span class="num">8</span> UI/UX Design &amp; Figma Mockups</span></h2>
+  
+  <h3>8.1 Design System</h3>
+  <p>The application features a premium, professional design system built with Material Design 3 principles:</p>
+  
+  <div class="grid-3">
+    <div class="card">
+      <h4>🎨 Color Palette</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;">
+        <span style="display:inline-block;width:36px;height:36px;border-radius:8px;background:#1E3A5F;" title="Midnight Blue"></span>
+        <span style="display:inline-block;width:36px;height:36px;border-radius:8px;background:#D4AF37;" title="Gold"></span>
+        <span style="display:inline-block;width:36px;height:36px;border-radius:8px;background:#10B981;" title="Success Green"></span>
+        <span style="display:inline-block;width:36px;height:36px;border-radius:8px;background:#F59E0B;" title="Warning Amber"></span>
+        <span style="display:inline-block;width:36px;height:36px;border-radius:8px;background:#EF4444;" title="Danger Red"></span>
+        <span style="display:inline-block;width:36px;height:36px;border-radius:8px;background:#FAFAFC;" title="Light Surface"></span>
+      </div>
+      <p><strong>Primary:</strong> Midnight Blue (#1E3A5F)<br>
+      <strong>Accent:</strong> Gold (#D4AF37)<br>
+      <strong>Semantic colors:</strong> Success, Warning, Danger, Info</p>
+    </div>
+    <div class="card">
+      <h4>🔤 Typography</h4>
+      <p><strong>Headings:</strong> Poppins (Google Fonts)<br>
+      <strong>Body:</strong> Inter (Google Fonts)<br>
+      <strong>Bengali Support:</strong> NotoSansBengali</p>
+      <p style="margin-top:12px;">15 text style variants from displayLarge (57px) to labelSmall (11px)</p>
+    </div>
+    <div class="card">
+      <h4>✨ Design Elements</h4>
+      <ul style="margin:8px 0 0;font-size:14px;">
+        <li>Glassmorphism containers</li>
+        <li>Gradient buttons with shadows</li>
+        <li>Gold accent CTA buttons</li>
+        <li>Staggered fade-in animations</li>
+        <li>Shimmer loading skeletons</li>
+        <li>Premium card system</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>8.2 Screen Mockups (Generated)</h3>
+  <p>The following UI wireframes were programmatically generated using PIL (Python Imaging Library) to represent the key screens of the application. These mockups are designed in a 1080×2400 Android canvas format and can be imported into Figma for further refinement.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>📱 Login / Register Screen</h4>
+      <p>The authentication entry point with email/password login, registration for new shop owners, and password recovery options. Features a logo placeholder, form inputs, and primary action buttons styled with the brand's Midnight Blue gradient.</p>
+      <p><span class="badge badge-blue">Route: /login, /register</span></p>
+    </div>
+    <div class="card">
+      <h4>📊 Dashboard</h4>
+      <p>The main landing screen showing key performance indicators (total products, low stock count, today's sales, monthly revenue) in stat cards. Features a weekly sales trend chart, quick actions grid, recent sales list, and low stock alerts. Includes a welcome hero header with the company name.</p>
+      <p><span class="badge badge-blue">Route: /</span></p>
+    </div>
+    <div class="card">
+      <h4>📦 Product List & Details</h4>
+      <p>Searchable product list with category filter chips. Each product card shows name, SKU, bag type badge, selling price, and profit margin. Tapping opens the product detail screen with full information, QR code display, and edit capabilities. Category and brand management are accessible from the overflow menu.</p>
+      <p><span class="badge badge-blue">Routes: /products, /products/:id</span></p>
+    </div>
+    <div class="card">
+      <h4>📷 Barcode Scanner</h4>
+      <p>Camera-based barcode scanning using mobile_scanner package. When a barcode is detected, it either looks up the existing product or offers to create a new one. Supports rapid product search for POS workflows.</p>
+      <p><span class="badge badge-blue">Route: /scanner</span></p>
+    </div>
+    <div class="card">
+      <h4>🧾 Purchase Orders</h4>
+      <p>Purchase order list with create PO functionality. Each PO shows PO number, supplier, expected delivery date, and status. The receive flow allows partial receiving of items with warehouse selection and batch tracking.</p>
+      <p><span class="badge badge-blue">Routes: /purchases, /purchases/:id/receive</span></p>
+    </div>
+    <div class="card">
+      <h4>🛒 POS / Sales</h4>
+      <p>Full POS screen with product search, cart management (add/remove quantity), and checkout flow. Supports split payments (cash, card, UPI) with a payment simulation step before finalizing the sale. Generates invoice on completion.</p>
+      <p><span class="badge badge-blue">Route: /pos</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 9: APPLICATION FEATURES ==================== -->
+<div id="sec9" class="section">
+  <h2><span class="section-number"><span class="num">9</span> Application Features</span></h2>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="icon">🔐</div>
+      <h3>Authentication &amp; Authorization</h3>
+      <ul>
+        <li>Email/password registration and login via Supabase Auth</li>
+        <li>Multi-tenant company isolation</li>
+        <li>Role-based access (Owner, Manager, Staff, Accountant)</li>
+        <li>Granular permission system (<code>inventory.view</code>, <code>sales.pos</code>, etc.)</li>
+        <li>Staff management with invite codes</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">🎒</div>
+      <h3>Product Management</h3>
+      <ul>
+        <li>Bag-specific attributes (type, material, color, size, dimensions)</li>
+        <li>Category &amp; brand management</li>
+        <li>Barcode &amp; QR code generation</li>
+        <li>Image upload via Supabase Storage</li>
+        <li>SKU auto-generation</li>
+        <li>Warranty tracking</li>
+        <li>Active/inactive product status</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">📦</div>
+      <h3>Inventory Management</h3>
+      <ul>
+        <li>Multi-warehouse support (Showroom, Warehouse, etc.)</li>
+        <li>Batch number tracking</li>
+        <li>Stock condition tracking (NEW, DAMAGED, etc.)</li>
+        <li>Low stock alerts with configurable thresholds</li>
+        <li>Stock adjustment with reason logging</li>
+        <li>Stock transfer between warehouses</li>
+        <li>Physical stock take with counting sessions</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">🛒</div>
+      <h3>Point of Sale (POS)</h3>
+      <ul>
+        <li>Rapid product search by name, SKU, or barcode</li>
+        <li>Barcode scanner integration</li>
+        <li>Cart management with quantity controls</li>
+        <li>Multiple payment modes: Cash, Card, UPI, Split</li>
+        <li>Payment simulation before checkout</li>
+        <li>Automatic stock deduction on sale</li>
+        <li>Invoice PDF generation</li>
+        <li>Sales return workflow</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">📋</div>
+      <h3>Purchase Management</h3>
+      <ul>
+        <li>Purchase order creation with line items</li>
+        <li>Supplier management</li>
+        <li>Partial receiving of purchase orders</li>
+        <li>Idempotency protection (clientRequestId)</li>
+        <li>Auto-status update (PENDING → RECEIVED)</li>
+        <li>Batch number tracking on received items</li>
+        <li>PO number generation</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">📊</div>
+      <h3>Reports &amp; Analytics</h3>
+      <ul>
+        <li>Sales report with daily totals and top products</li>
+        <li>Stock report with low stock identification</li>
+        <li>Profit report (revenue, COGS, gross profit, margin %)</li>
+        <li>Inventory valuation report</li>
+        <li>Supplier performance report</li>
+        <li>Interactive charts (weekly sales trend)</li>
+        <li>PDF export for all reports</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">🔄</div>
+      <h3>Offline Sync</h3>
+      <ul>
+        <li>Outbox pattern for offline-first writes</li>
+        <li>Queue management (view, retry, clear)</li>
+        <li>Duplicate detection via business fingerprint</li>
+        <li>Ordered sync (oldest-first)</li>
+        <li>Sync status indicator on dashboard</li>
+        <li>Automatic sync on connectivity restore</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">⚙️</div>
+      <h3>Admin &amp; Debug Tools</h3>
+      <ul>
+        <li>Staff management (add, edit roles, permissions)</li>
+        <li>CSV bulk import/export for products, suppliers, customers</li>
+        <li>Backend health checker (schema + RLS validation)</li>
+        <li>Live Supabase connection test</li>
+        <li>Sync queue viewer</li>
+        <li>Demo catalog seeder (30+ demo products)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 10: FEASIBILITY ANALYSIS ==================== -->
+<div id="sec10" class="section">
+  <h2><span class="section-number"><span class="num">10</span> Feasibility Analysis</span></h2>
+
+  <h3>10.1 Technical Feasibility</h3>
+  <div class="card">
+    <table>
+      <thead><tr><th>Factor</th><th>Assessment</th><th>Rating</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Cross-Platform Support</strong></td>
+          <td>Flutter enables single codebase for Android, iOS, Web, Linux, macOS, Windows. The app uses responsive layouts with adaptive breakpoints.</td>
+          <td><span class="badge badge-green">✅ Excellent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Backend Scalability</strong></td>
+          <td>Supabase (PostgreSQL) provides automatic scaling, row-level security, and real-time subscriptions. The multi-tenant schema with company_id isolation ensures data safety.</td>
+          <td><span class="badge badge-green">✅ Excellent</span></td>
+        </tr>
+        <tr>
+          <td><strong>Offline Capability</strong></td>
+          <td>Outbox pattern with SharedPrefs persistence provides basic offline support. Full offline with local SQLite could be added using Drift/Hive.</td>
+          <td><span class="badge badge-yellow">⚠️ Good (Basic)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Real-time Sync</strong></td>
+          <td>Supabase Realtime channels used for staff list updates. Polling used for sales orders (10-second interval). Sufficient for inventory use case.</td>
+          <td><span class="badge badge-green">✅ Good</span></td>
+        </tr>
+        <tr>
+          <td><strong>State Management</strong></td>
+          <td>Riverpod provides type-safe, testable state management with proper dependency injection and automatic disposal.</td>
+          <td><span class="badge badge-green">✅ Excellent</span></td>
+        </tr>
+        <tr>
+          <td><strong>PDF Generation</strong></td>
+          <td>Using dart package 'pdf' for server-side rendering and 'printing' for platform-specific print/share dialogs. Supports Bengali fonts.</td>
+          <td><span class="badge badge-green">✅ Excellent</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>10.2 Operational Feasibility</h3>
+  <div class="card">
+    <table>
+      <thead><tr><th>Factor</th><th>Assessment</th><th>Rating</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Ease of Use</strong></td>
+          <td>Premium Material 3 UI with intuitive navigation, bottom nav bar, search, and quick actions. Learning curve is minimal for users familiar with mobile apps.</td>
+          <td><span class="badge badge-green">✅ High</span></td>
+        </tr>
+        <tr>
+          <td><strong>Deployment</strong></td>
+          <td>Supabase provides managed hosting. Flutter app can be deployed via Play Store, App Store, or web. No server maintenance required.</td>
+          <td><span class="badge badge-green">✅ High</span></td>
+        </tr>
+        <tr>
+          <td><strong>Maintenance</strong></td>
+          <td>Clean architecture with repository pattern makes code maintainable. Riverpod's modular provider system enables easy testing and modification.</td>
+          <td><span class="badge badge-green">✅ High</span></td>
+        </tr>
+        <tr>
+          <td><strong>Data Backup</strong></td>
+          <td>Supabase provides automatic daily backups for PostgreSQL. Point-in-time recovery available on paid plans.</td>
+          <td><span class="badge badge-green">✅ Good</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>10.3 Economic Feasibility</h3>
+  <div class="highlight-box highlight-success">
+    <strong>Cost-Benefit Analysis:</strong> The project uses free tiers for both Flutter (open-source) and Supabase (Free Tier: 500 MB database, 1 GB storage, 50,000 monthly active users). The total development cost is essentially zero beyond developer time. For a bag shop, this replaces potentially expensive commercial inventory software (typically $50-200/month) with a custom solution at no recurring software cost.
+  </div>
+  
+  <table>
+    <thead><tr><th>Cost Category</th><th>Estimate</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Development Tools</td><td>$0</td><td>Flutter, VS Code, Supabase (Free Tier)</td></tr>
+      <tr><td>Hosting (Supabase)</td><td>$0–$25/month</td><td>Free for small shops; Pro ($25) for production</td></tr>
+      <tr><td>App Store Deployment</td><td>$25 (Play Store, one-time)</td><td>Apple Developer Program: $99/year</td></tr>
+      <tr><td>Personnel (Student Project)</td><td>$0</td><td>Academic project</td></tr>
+      <tr><td>Maintenance</td><td>~5 hours/month</td><td>Code updates, data monitoring</td></tr>
+      <tr><td style="font-weight:700;">Total Year 1</td><td style="font-weight:700;">$25–$400</td><td>Depends on deployment scope</td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.4 Schedule Feasibility</h3>
+  <div class="card">
+    <table>
+      <thead><tr><th>Phase</th><th>Duration</th><th>Deliverables</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Phase 1: Planning &amp; Design</strong></td><td>Weeks 1–2</td><td>Project proposal, ERD, UI mockups, Supabase schema</td></tr>
+        <tr><td><strong>Phase 2: Core Architecture</strong></td><td>Weeks 3–4</td><td>Flutter setup, Riverpod providers, Supabase integration, Auth</td></tr>
+        <tr><td><strong>Phase 3: Product &amp; Inventory</strong></td><td>Weeks 5–6</td><td>CRUD for products, categories, brands, inventory, warehouses</td></tr>
+        <tr><td><strong>Phase 4: Sales &amp; POS</strong></td><td>Weeks 7–8</td><td>POS screen, cart flow, checkout, sales list, invoice PDF</td></tr>
+        <tr><td><strong>Phase 5: Purchases</strong></td><td>Week 9</td><td>Purchase orders, receive flow, supplier management</td></tr>
+        <tr><td><strong>Phase 6: Reports &amp; Analytics</strong></td><td>Week 10</td><td>Report screens, charts, PDF export, profit/valuation reports</td></tr>
+        <tr><td><strong>Phase 7: Admin &amp; Offline</strong></td><td>Week 11</td><td>Admin panel, staff management, sync service, bulk tools</td></tr>
+        <tr><td><strong>Phase 8: Testing &amp; Polish</strong></td><td>Week 12</td><td>Widget tests, integration tests, UI polish, deployment</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>10.5 Risk Assessment</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="icon">⚠️</div>
+      <h3>Identified Risks</h3>
+      <ul>
+        <li><strong>Internet Dependency:</strong> Full features require internet for Supabase. Mitigated by offline sync queue.</li>
+        <li><strong>Data Loss:</strong> Without full local database, data could be lost if sync fails. Mitigated by outbox persistence in SharedPrefs.</li>
+        <li><strong>Supabase API Changes:</strong> Supabase Flutter SDK is actively developed. Mitigated by abstracting behind repository pattern.</li>
+        <li><strong>Concurrent Access:</strong> Multiple staff editing same data. Mitigated by Row Level Security and realtime subscriptions.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">✅</div>
+      <h3>Risk Mitigations</h3>
+      <ul>
+        <li>Outbox pattern with retry logic for offline operations</li>
+        <li>StableFingerprint for idempotency (preventing duplicate operations)</li>
+        <li>Backend health checker for monitoring schema integrity</li>
+        <li>Company-level data isolation via RLS policies</li>
+        <li>Comprehensive error handling with user-friendly messages</li>
+        <li>Supabase's built-in point-in-time recovery</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 11: ROUTE MAP & SCREENS ==================== -->
+<div id="sec11" class="section">
+  <h2><span class="section-number"><span class="num">11</span> Route Map &amp; Screens</span></h2>
+
+  <div class="diagram-container">
+    <div class="mermaid-wrapper">
+      <pre class="mermaid" style="background: transparent;">
+graph LR
+    Login["/login"] --> Dashboard["/"]
+    Register["/register"] --> Dashboard
+    
+    Dashboard --> Products["/products"]
+    Dashboard --> POS["/pos"]
+    Dashboard --> Sales["/sales"]
+    Dashboard --> Customers["/customers"]
+    Dashboard --> Purchases["/purchases"]
+    Dashboard --> Reports["/reports"]
+    Dashboard --> Profile["/profile"]
+    Dashboard --> Admin["/admin"]
+    Dashboard --> Notifications["/notifications"]
+    Dashboard --> Scanner["/scanner"]
+    Dashboard --> Inventory["/inventory"]
+    
+    Products --> AddProduct["/products/add"]
+    Products --> ProductDetail["/products/:id"]
+    Products --> Categories["/products/categories"]
+    Products --> Brands["/products/brands"]
+    
+    Inventory --> Analytics["/inventory/analytics"]
+    Inventory --> LowStock["/inventory/low-stock"]
+    Inventory --> Adjust["/inventory/adjust"]
+    Inventory --> Transfer["/inventory/transfer"]
+    Inventory --> Movements["/inventory/movements"]
+    Inventory --> StockTake["/inventory/stock-take"]
+    
+    Sales --> SaleDetail["/sales/:id"]
+    SaleDetail --> Return["/sales/:id/return"]
+    
+    Purchases --> Suppliers["/purchases/suppliers"]
+    Purchases --> AddPurchase["/purchases/add"]
+    Purchases --> PurchaseDetail["/purchases/:id"]
+    PurchaseDetail --> Receive["/purchases/:id/receive"]
+    
+    Reports --> SalesReport["/reports/sales"]
+    Reports --> StockReport["/reports/stock"]
+    Reports --> ProfitReport["/reports/profit"]
+    Reports --> Valuation["/reports/valuation"]
+    Reports --> SupplierPerf["/reports/suppliers"]
+    
+    Admin --> Staff["/admin/staff"]
+    Admin --> BulkData["/admin/data-tools"]
+    Admin --> AuditLog["/admin/audit-log"]
+    
+    Debug["/debug/*"] --> BackendHealth["/debug/backend-health"]
+    Debug --> SyncQueue["/debug/sync-queue"]
+    Debug --> SupabaseTest["/debug/supabase"]
+</pre>
+    </div>
+  </div>
+
+  <h3>11.1 Complete Screen Inventory</h3>
+  <table>
+    <thead><tr><th>Category</th><th>Screen</th><th>Route</th><th>Permission</th></tr></thead>
+    <tbody>
+      <tr><td>Auth</td><td>Login</td><td>/login</td><td>Public</td></tr>
+      <tr><td>Auth</td><td>Register</td><td>/register</td><td>Public</td></tr>
+      <tr><td rowspan="4">Admin</td><td>Admin Dashboard</td><td>/admin</td><td>Owner/Manager</td></tr>
+      <tr><td>Staff Management</td><td>/admin/staff</td><td>staff.manage</td></tr>
+      <tr><td>Bulk Data Tools</td><td>/admin/data-tools</td><td>Owner/Manager</td></tr>
+      <tr><td>Audit Log</td><td>/admin/audit-log</td><td>Owner/Manager</td></tr>
+      <tr><td>Dashboard</td><td>Dashboard</td><td>/</td><td>All</td></tr>
+      <tr><td rowspan="6">Products</td><td>Product List</td><td>/products</td><td>products.view</td></tr>
+      <tr><td>Add Product</td><td>/products/add</td><td>products.edit</td></tr>
+      <tr><td>Product Detail</td><td>/products/:id</td><td>products.view</td></tr>
+      <tr><td>Edit Product</td><td>/products/:id/edit</td><td>products.edit</td></tr>
+      <tr><td>Categories</td><td>/products/categories</td><td>products.edit</td></tr>
+      <tr><td>Brands</td><td>/products/brands</td><td>products.edit</td></tr>
+      <tr><td rowspan="7">Inventory</td><td>Inventory List</td><td>/inventory</td><td>inventory.view</td></tr>
+      <tr><td>Analytics</td><td>/inventory/analytics</td><td>inventory.view</td></tr>
+      <tr><td>Low Stock</td><td>/inventory/low-stock</td><td>inventory.view</td></tr>
+      <tr><td>Adjust Stock</td><td>/inventory/adjust</td><td>inventory.edit</td></tr>
+      <tr><td>Transfer Stock</td><td>/inventory/transfer</td><td>inventory.edit</td></tr>
+      <tr><td>Stock Movements</td><td>/inventory/movements</td><td>inventory.view</td></tr>
+      <tr><td>Stock Take</td><td>/inventory/stock-take</td><td>inventory.edit</td></tr>
+      <tr><td rowspan="3">Sales</td><td>Sales List</td><td>/sales</td><td>sales.view</td></tr>
+      <tr><td>Sale Detail</td><td>/sales/:id</td><td>sales.view</td></tr>
+      <tr><td>Sales Return</td><td>/sales/:id/return</td><td>sales.view</td></tr>
+      <tr><td rowspan="2">Customers</td><td>Customer List</td><td>/customers</td><td>customers.view</td></tr>
+      <tr><td>Customer Form</td><td>/customers/add, /customers/:id/edit</td><td>customers.edit</td></tr>
+      <tr><td rowspan="3">Purchases</td><td>Purchase List</td><td>/purchases</td><td>purchases.view</td></tr>
+      <tr><td>Add Purchase</td><td>/purchases/add</td><td>purchases.edit</td></tr>
+      <tr><td>Receive Purchase</td><td>/purchases/:id/receive</td><td>purchases.edit</td></tr>
+      <tr><td rowspan="6">Reports</td><td>Reports Hub</td><td>/reports</td><td>reports.view</td></tr>
+      <tr><td>Sales Report</td><td>/reports/sales</td><td>reports.view</td></tr>
+      <tr><td>Stock Report</td><td>/reports/stock</td><td>reports.view</td></tr>
+      <tr><td>Profit Report</td><td>/reports/profit</td><td>reports.view</td></tr>
+      <tr><td>Inventory Valuation</td><td>/reports/valuation</td><td>reports.view</td></tr>
+      <tr><td>Supplier Performance</td><td>/reports/suppliers</td><td>reports.view</td></tr>
+      <tr><td>POS</td><td>Point of Sale</td><td>/pos</td><td>sales.pos</td></tr>
+      <tr><td>Scanner</td><td>Barcode Scanner</td><td>/scanner</td><td>All</td></tr>
+      <tr><td>Profile</td><td>User Profile</td><td>/profile</td><td>All</td></tr>
+      <tr><td rowspan="3">Debug</td><td>Backend Health</td><td>/debug/backend-health</td><td>Admin</td></tr>
+      <tr><td>Sync Queue</td><td>/debug/sync-queue</td><td>Admin</td></tr>
+      <tr><td>Supabase Test</td><td>/debug/supabase</td><td>Admin</td></tr>
+    </tbody>
+  </table>
+
+  <h3>11.2 Codebase Structure</h3>
+  <div class="card">
+    <pre style="font-size:12px;line-height:1.5;">
+lib/
+├── app/                          # App entry point
+├── core/                         # Shared core utilities
+│   ├── constants/                # Bag types, roles, permissions, app constants
+│   ├── exceptions/               # Custom exceptions, error handler
+│   ├── utils/                    # Calculations, extensions, formatters, validators, responsive
+│   └── widgets/                  # Shared widgets (AppBody, animations, cards, etc.)
+├── data/                         # Data layer
+│   ├── datasources/local/        # Local database abstraction
+│   ├── local/                    # SharedPrefs wrapper
+│   ├── models/                   # 15+ data models (product, inventory, sales, etc.)
+│   └── repositories/             # 14 repository classes
+├── domain/                       # Domain layer
+│   ├── entities/                 # Domain entities
+│   └── repositories/             # Repository interfaces
+├── presentation/                 # Presentation layer
+│   ├── features/                 # Feature modules
+│   │   ├── admin/                # Admin panel (dashboard, staff, bulk data, audit)
+│   │   ├── auth/                 # Auth (login, register, providers)
+│   │   ├── customers/            # Customer management
+│   │   ├── dashboard/            # Dashboard with stats
+│   │   ├── debug/                # Debug tools (health, sync, supabase test)
+│   │   ├── inventory/            # Inventory management
+│   │   ├── notifications/        # In-app notifications
+│   │   ├── products/             # Product management
+│   │   ├── profile/              # User profile
+│   │   ├── purchases/            # Purchase management
+│   │   ├── reports/              # Reports and analytics
+│   │   └── sales/                # Sales and POS
+│   ├── providers/                # Global providers (theme, connectivity)
+│   ├── router/                   # GoRouter configuration
+│   └── theme/                    # Material 3 theme with custom brand colors
+└── services/                     # Services layer
+    ├── supabase_service.dart      # Supabase client wrapper
+    ├── sync_service.dart          # Offline sync with outbox pattern
+    ├── barcode_service.dart       # Barcode scanning
+    ├── bulk_data_service.dart     # CSV import/export
+    ├── invoice_pdf.dart           # Invoice PDF generation
+    ├── report_pdf.dart            # Report PDF generation
+    ├── notification_service.dart  # In-app notifications
+    └── backend_health_service.dart # Backend health check
+    </pre>
+  </div>
+</div>
+
+<!-- ==================== SECTION 12: CONCLUSION ==================== -->
+<div id="sec12" class="section">
+  <h2><span class="section-number"><span class="num">12</span> Conclusion &amp; Future Work</span></h2>
+
+  <h3>12.1 Conclusion</h3>
+  <div class="highlight-box highlight-success">
+    <p>The Bag Shop Inventory Management System successfully delivers a comprehensive, production-ready inventory solution for bag retail businesses. Built with Flutter and Supabase, it demonstrates:</p>
+    <ul>
+      <li><strong>40+ screens</strong> covering the complete retail workflow</li>
+      <li><strong>15+ database tables</strong> with proper relationships and Row-Level Security</li>
+      <li><strong>14 repository classes</strong> following clean architecture principles</li>
+      <li><strong>Offline-first sync</strong> with outbox pattern for reliable operation</li>
+      <li><strong>Professional PDF</strong> invoice and report generation</li>
+      <li><strong>Premium Material 3</strong> UI with custom brand identity</li>
+      <li><strong>Role-based access control</strong> supporting multi-staff environments</li>
+    </ul>
+  </div>
+
+  <h3>12.2 Future Enhancements</h3>
+  <div class="grid-2">
+    <div class="card">
+      <div class="icon">🚀</div>
+      <h4>Short-term (1–3 months)</h4>
+      <ul>
+        <li>Full offline SQLite database (Drift/Hive) for complete offline operation</li>
+        <li>Push notifications for low stock alerts and order updates</li>
+        <li>Supplier portal for order placement and tracking</li>
+        <li>Multi-language support (Bengali + English)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="icon">🌟</div>
+      <h4>Long-term (3–12 months)</h4>
+      <ul>
+        <li>AI-powered demand forecasting and stock recommendations</li>
+        <li>E-commerce integration for online + offline inventory sync</li>
+        <li>Barcode label printing (thermal printer support)</li>
+        <li>Analytics dashboard with advanced data visualization</li>
+        <li>Customer loyalty program and CRM features</li>
+        <li>Multi-currency support for international suppliers</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box highlight-warning" style="margin-top:32px;">
+    <strong>Project Status:</strong> This project has been fully implemented and tested. The application is ready for real-world deployment with a Supabase Free Tier backend. All source code is available in the project repository.
+  </div>
+
+  <div style="text-align:center;margin-top:60px;padding:40px;border-top:1px solid var(--border);">
+    <p style="font-size:18px;font-weight:600;color:var(--primary);">
+      — End of Report —
+    </p>
+    <p style="color:var(--text-secondary);margin-top:8px;">
+      Bag Shop Inventory Management System | CIT 320 :: Software Development Project-II<br>
+      Patuakhali Science and Technology University | 2026
+    </p>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <p><strong>Bag Shop Inventory Management System</strong> — Project Report for CIT 320 :: Software Development Project-II</p>
+  <p>Patuakhali Science and Technology University, Faculty of Computer Science and Engineering</p>
+  <p>Built with Flutter &amp; Supabase | Generated from source code analysis on June 24, 2026</p>
+</footer>
+
+</body>
+</html>

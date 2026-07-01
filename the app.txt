@@ -1,0 +1,133 @@
+This is a Flutter + Supabase retail operations app for a bag shop. In plain terms, it is a full shop management system: it tracks products, stock, sales, purchases, customers, suppliers, reports, staff, and admin tasks in one mobile/web app. The project is built to work against real company data in Supabase, with permissions, live records, and an offline sync queue for failed writes. The main entry points are main.dart, app.dart, app_router.dart, and the project summary in README.md.
+
+What the app is designed to do
+
+Manage bag-specific products with fields like type, material, size, barcode, selling price, and stock.
+Keep inventory per warehouse, including stock movements, low-stock alerts, transfers, adjustments, and stock taking.
+Run sales through a POS flow, save invoices, support split payments, and handle returns.
+Manage purchases from suppliers and receiving stock.
+Show reports for sales, stock, profit, valuation, and supplier performance.
+Support staff onboarding through invite codes instead of exposing privileged backend keys in the app.
+Provide admin and debug tools for health checks, sync queue review, and bulk import/export.
+How it is built
+
+Flutter provides the UI and navigation.
+Riverpod is used for state management and data providers.
+GoRouter handles page routing and permission-based access control.
+Supabase is the backend database and auth source.
+Repository classes keep database logic out of screens.
+Providers expose live or fetched data to the UI.
+The sync service queues failed writes so the app can still work when connectivity is unreliable.
+That architecture is important because it separates concerns: screens only render UI, providers decide what data to load, repositories talk to Supabase, and the router protects routes based on role and permission.
+
+How the main flow works
+
+The app starts in main.dart, loads Supabase config from .env or dart defines, and refuses to boot if SUPABASE_URL or SUPABASE_ANON_KEY is missing.
+The app shell in app.dart installs the router and theme.
+The router in app_router.dart sends signed-in users to the dashboard and blocks unauthorized access to admin, sales, purchases, inventory, and edit screens.
+Each feature screen reads data through providers, so the same pattern works across the app.
+What each major screen does and why
+
+Dashboard: the home screen. It gives a quick operational snapshot so the shop owner can see today’s sales, low stock, recent sales, and quick actions without digging through menus.
+Admin panel: used by owner or manager roles to manage staff invites, bulk data tools, backend health, sync queue, and notifications.
+Products: create, edit, inspect, and categorize products. This is the inventory master list.
+Inventory: watch current stock, low stock, stock movements, adjustments, transfers, stock take, and barcode scanning.
+POS: the checkout screen for creating a sale quickly from cart items.
+Sales: browse completed sales, open invoice details, and process returns.
+Customers: manage customer records used during sales and reporting.
+Purchases: manage suppliers, create purchase orders, and receive stock into inventory.
+Reports: analyze sales, stock, profit, valuation, and supplier performance.
+Profile: shows the signed-in user, company, permissions, and quick access to notifications, sync queue, and backend health.
+Debug screens: used to confirm Supabase connectivity, check the backend schema and policies, and inspect queued offline actions.
+What the buttons do
+On the dashboard, the top-right buttons are operational shortcuts:
+
+Admin Panel opens the admin hub for privileged users.
+Notifications opens the alerts/reminders screen.
+Backend Health checks Supabase schema, connectivity, and policy-related issues.
+Sync Queue opens queued offline actions.
+Sync forces queued writes to push to Supabase.
+Supabase Test opens a live backend read test.
+Logout signs the user out and returns them to login.
+The dashboard’s quick action tiles are the everyday navigation buttons:
+
+Scan opens the barcode scanner.
+Add Product opens the product creation flow, or Products opens the product list when the user cannot edit.
+POS opens the checkout screen.
+Sales opens the sales list.
+Customers opens the customer list.
+Purchase opens purchase creation.
+Reports opens the reports hub.
+The Recent Sales card shows the latest sales records so the shop can see activity immediately. The Low Stock Alerts card shows items below the minimum threshold so the user can restock before selling out.
+
+On the admin panel, the cards work like command shortcuts:
+
+Staff management opens invite code creation and staff role/access management.
+Bulk import / export opens CSV tools for products, suppliers, and customers.
+Backend health opens the schema and policy check screen.
+Sync queue opens pending offline actions.
+Live notifications opens reminders and alerts.
+Logout signs out the admin.
+On the sales list screen:
+
+Add Sale sends the user to POS, because POS is the real sale creation flow.
+Refresh manually reloads the sales list.
+Tapping a sale opens the sale detail and invoice screen.
+The return route lets the user process returned items against a past sale.
+On the POS screen:
+
+The search field lets the user look up products.
+The scan button reads a barcode and fills search automatically.
+Add to cart increases quantity for a product.
+Remove from cart lowers quantity or removes the item.
+Payment mode chooses CASH, CARD, UPI, or SPLIT.
+Split payment fields let the cashier divide payment across methods.
+Checkout creates the sale, updates stock, and returns the user to Sales.
+If a write cannot complete immediately, the app can queue parts of it for sync.
+On products and product detail:
+
+The three-dot menu opens category and brand management.
+Add product opens the product creation form.
+Tapping a product opens its detail page.
+Edit product is available when the user has permission.
+On profile:
+
+Notifications and Sync Queue are quick operational links.
+Backend Health is for support/debugging.
+Admin opens the admin panel.
+Logout ends the session.
+How permissions work
+The app does not show everything to everyone. Route guards and permission providers ensure:
+
+Only signed-in users can reach protected screens.
+Only admins can open the admin panel.
+Only users with the right permissions can access POS, reports, inventory, sales, customers, and purchases.
+Edit screens are blocked if the user has view-only access.
+That matters because a retail system has different roles: an owner needs staff and finance controls, a cashier needs POS, and a stock operator needs inventory tools.
+
+How live data works
+The app is designed so the UI reflects current data rather than static demo content. In the current implementation:
+
+The dashboard reads live sales data for recent sales and today’s sales totals.
+Product lists are stream-backed so they update when product data changes.
+The sync queue and backend health screens give you production visibility when something goes wrong.
+The app also uses a polling fallback for sales so the dashboard stays updated even if realtime subscriptions are unreliable.
+How to use it
+
+Create a Supabase project and apply the SQL schema in the project’s sql setup.
+Put SUPABASE_URL and SUPABASE_ANON_KEY into .env or pass them with dart defines.
+Start the app and sign in or register.
+If you are an owner or manager, open the admin panel and create invite codes for staff.
+Add products and suppliers, then receive stock or seed initial catalog data if you need test data.
+Use POS to make sales.
+Check the dashboard for recent sales, low stock alerts, and today’s totals.
+Use reports to review business performance.
+Use sync queue and backend health if anything fails or data looks stale.
+Why it was made this way
+
+Supabase keeps the app backed by a real database instead of local demo state.
+Riverpod and repositories make the code maintainable because UI and data access stay separated.
+GoRouter makes route protection and nested screens predictable.
+Invite-code onboarding is safer than embedding privileged backend credentials in a client app.
+The offline sync queue makes the app usable in unreliable network conditions.
+The dashboard is built to give the shop owner immediate operational visibility, which is the main reason this kind of app exists.

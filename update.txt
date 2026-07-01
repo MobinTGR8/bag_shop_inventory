@@ -1,0 +1,30 @@
+I’m turning the current app state into a realistic roadmap: the next step is prioritizing the biggest product and engineering wins, not small polish.Major Updates
+
+Replace the remaining polling-backed live data with true realtime subscriptions where Supabase supports it, plus a reconnect and fallback strategy so the dashboard never breaks when realtime times out.
+Add a proper multi-branch or multi-warehouse layer if the shop has more than one location, so stock, sales, and reports can be separated cleanly.
+Introduce a stronger analytics dashboard with trends, alerts, profit by category, top-selling products, slow movers, and stock aging.
+Build a customer-facing loyalty and credit system so repeat buyers, due payments, and purchase history become part of the core workflow.
+Expand staff management into a full role-and-permission matrix with audit logs for every sensitive action.
+Add a full offline-first sync dashboard with conflict resolution, retry controls, and visible sync status per record instead of only a queue count.
+Add barcode label printing and invoice templates so the app can support retail operations end to end.
+Add exportable business reports in PDF and CSV for sales, stock, tax, and purchase summaries.
+Add notification automation for low stock, overdue payments, unsynced actions, and unusual sales spikes.
+Add a proper settings module for currency, tax rules, shop profile, invoice branding, and regional formatting.
+Good Next Improvements
+
+Standardize currency and number formatting everywhere so the app always displays one locale correctly.
+Make every list screen support search, filters, and sort so the app stays usable as data grows.
+Add full test coverage for sales creation, inventory movement, returns, and permissions.
+Reduce duplicate data access logic by centralizing formatting and repository helpers.
+Improve mobile usability on smaller screens by tightening spacing, pagination, and action density.
+Add an onboarding flow that sets up company profile, warehouse, tax settings, and starter catalog in one guided path.
+Best Order To Tackle
+
+First: realtime stability, sync visibility, and data correctness.
+Second: sales, inventory, customers, and reports polish.
+Third: multi-branch, loyalty, automation, and analytics expansion.
+If you want, I can turn this into a prioritized 30-day roadmap or a production feature backlog.
+
+Continued with Autopilot: Task not yet complete
+
+I outlined the main product and engineering directions as a prioritized roadmap, with the biggest next wins centered on realtime reliability, reporting, sync, and operational depth.
